@@ -14,8 +14,9 @@ extraResources:
   - 'libraries'
 
 # Windows Configuration
-win: 
-  target: 
+win:
+  icon: 'build/icon.ico'
+  target:
     - target: 'nsis'
       arch: 'x64'
 
@@ -25,9 +26,13 @@ nsis:
   perMachine: false
   allowElevation: true
   allowToChangeInstallationDirectory: true
+  installerIcon: 'build/icon.ico'
+  uninstallerIcon: 'build/icon.ico'
+  uninstallDisplayName: 'Vanyla Plus'
 
 # macOS Configuration
 mac:
+  icon: 'build/icon.icns'
   target:
     - target: 'dmg'
       arch:
@@ -37,7 +42,8 @@ mac:
   category: 'public.app-category.games'
 
 # Linux Configuration
-linux: 
+linux:
+  icon: 'build/icon.png'
   target: 'AppImage'
   maintainer: 'Vanyla Plus'
   vendor: 'Vanyla Plus'
@@ -49,8 +55,6 @@ publish:
   provider: github
   owner: vanylaplus
   repo: VanylaLauncher
-
-
 
 directories:
   buildResources: 'build'

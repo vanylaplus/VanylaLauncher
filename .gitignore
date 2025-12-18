@@ -5,6 +5,5 @@
 /logs/
 /dist/
 out/
-build/
 *.log
 dev-app-update.yml

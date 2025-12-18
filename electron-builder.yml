@@ -47,8 +47,9 @@ linux:
 
 publish:
   provider: github
-  owner: vanyla
+  owner: vanylaplus
   repo: VanylaLauncher
+
 
 
 directories:

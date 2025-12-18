@@ -1,13 +1,13 @@
 {
-  "name": "helioslauncher",
-  "version": "1.2.1",
+  "name": "vanylaplus",
+  "version": "1.2.2",
   "productName": "VanylaPlus Launcher",
   "description": "Modded Minecraft Launcher",
-  "author": "Daniel Scalzi (https://github.com/dscalzi/)",
+  "author": "Zulu_FR",
   "license": "UNLICENSED",
-  "homepage": "https://github.com/dscalzi/HeliosLauncher",
+  "homepage": "https://vanylaplus.fr",
   "bugs": {
-    "url": "https://github.com/dscalzi/HeliosLauncher/issues"
+    "url": "https://vanylaplus.fr"
   },
   "private": true,
   "main": "index.js",

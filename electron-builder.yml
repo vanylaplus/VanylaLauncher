@@ -1,0 +1,56 @@
+appId: 'vanylaplus'
+productName: 'Vanyla Plus'
+artifactName: '${productName}-setup-${version}.${ext}'
+
+copyright: 'Copyright © 2025 - 2026'
+
+asar: true
+compression: 'maximum'
+
+files:
+  - '!{dist,.gitignore,.vscode,docs,dev-app-update.yml,.nvmrc,.eslintrc.json}'
+
+extraResources:
+  - 'libraries'
+
+# Windows Configuration
+win: 
+  target: 
+    - target: 'nsis'
+      arch: 'x64'
+
+# Windows Installer Configuration
+nsis:
+  oneClick: false
+  perMachine: false
+  allowElevation: true
+  allowToChangeInstallationDirectory: true
+
+# macOS Configuration
+mac:
+  target:
+    - target: 'dmg'
+      arch:
+        - 'x64'
+        - 'arm64'
+  artifactName: '${productName}-setup-${version}-${arch}.${ext}'
+  category: 'public.app-category.games'
+
+# Linux Configuration
+linux: 
+  target: 'AppImage'
+  maintainer: 'Vanyla Plus'
+  vendor: 'Vanyla Plus'
+  synopsis: 'Modded Minecraft Launcher'
+  description: ''
+  category: 'Game'
+
+publish:
+  provider: github
+  owner: vanyla
+  repo: VanylaLauncher
+
+
+directories:
+  buildResources: 'build'
+  output: 'dist'

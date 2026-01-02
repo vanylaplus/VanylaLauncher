@@ -16,7 +16,9 @@ const LangLoader                        = require('./app/assets/js/langloader')
 // Setup Lang
 LangLoader.setupLanguage()
 
-// Setup auto updater.
+// Setup auto updater listeners only once
+let autoUpdaterInitialized = false
+
 function initAutoUpdater(event, data) {
 
     if(data){
@@ -33,21 +35,28 @@ function initAutoUpdater(event, data) {
     if(process.platform === 'darwin'){
         autoUpdater.autoDownload = false
     }
-    autoUpdater.on('update-available', (info) => {
-        event.sender.send('autoUpdateNotification', 'update-available', info)
-    })
-    autoUpdater.on('update-downloaded', (info) => {
-        event.sender.send('autoUpdateNotification', 'update-downloaded', info)
-    })
-    autoUpdater.on('update-not-available', (info) => {
-        event.sender.send('autoUpdateNotification', 'update-not-available', info)
-    })
-    autoUpdater.on('checking-for-update', () => {
-        event.sender.send('autoUpdateNotification', 'checking-for-update')
-    })
-    autoUpdater.on('error', (err) => {
-        event.sender.send('autoUpdateNotification', 'realerror', err)
-    }) 
+    
+    // Only add listeners once to avoid memory leak
+    if(!autoUpdaterInitialized) {
+        autoUpdater.on('update-available', (info) => {
+            ipcMain.emit('sendAutoUpdateNotification', 'update-available', info)
+        })
+        autoUpdater.on('update-downloaded', (info) => {
+            ipcMain.emit('sendAutoUpdateNotification', 'update-downloaded', info)
+        })
+        autoUpdater.on('update-not-available', (info) => {
+            ipcMain.emit('sendAutoUpdateNotification', 'update-not-available', info)
+        })
+        autoUpdater.on('checking-for-update', () => {
+            ipcMain.emit('sendAutoUpdateNotification', 'checking-for-update')
+        })
+        autoUpdater.on('error', (err) => {
+            ipcMain.emit('sendAutoUpdateNotification', 'realerror', err)
+        })
+        autoUpdaterInitialized = true
+    }
+    
+    event.sender.send('autoUpdateNotification', 'ready')
 }
 
 // Open channel to listen for update actions.
@@ -56,7 +65,6 @@ ipcMain.on('autoUpdateAction', (event, arg, data) => {
         case 'initAutoUpdater':
             console.log('Initializing auto updater.')
             initAutoUpdater(event, data)
-            event.sender.send('autoUpdateNotification', 'ready')
             break
         case 'checkForUpdate':
             autoUpdater.checkForUpdates()

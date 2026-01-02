@@ -19,6 +19,8 @@ const VIEWS = {
     loginOptions: '#loginOptionsContainer',
     login: '#loginContainer',
     settings: '#settingsContainer',
+    cgu: '#cguContainer',
+    help: '#helpContainer',
     welcome: '#welcomeContainer',
     waiting: '#waitingContainer'
 }
@@ -57,6 +59,16 @@ function getCurrentView(){
     return currentView
 }
 
+/**
+ * Global function to open settings view from onclick handlers
+ */
+function openSettingsView(){
+    console.log('🔥 openSettingsView called!')
+    console.log('currentView:', currentView)
+    console.log('VIEWS.settings:', VIEWS.settings)
+    switchView(currentView, VIEWS.settings)
+}
+
 async function showMainUI(data){
 
     if(!isDev){
@@ -68,8 +80,8 @@ async function showMainUI(data){
     updateSelectedServer(data.getServerById(ConfigManager.getSelectedServer()))
     refreshServerStatus()
     setTimeout(() => {
-        document.getElementById('frameBar').style.backgroundColor = 'rgba(0, 0, 0, 0.5)'
-        document.body.style.backgroundImage = `url('assets/images/backgrounds/${document.body.getAttribute('bkid')}.jpg')`
+        document.getElementById('frameBar').style.backgroundColor = 'transparent'
+        document.body.style.backgroundImage = `url('assets/images/backgrounds/0.jpg')`
         $('#main').show()
 
         const isLoggedIn = Object.keys(ConfigManager.getAuthAccounts()).length > 0

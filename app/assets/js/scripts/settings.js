@@ -310,7 +310,8 @@ function settingsNavItemListener(ele, fade = true){
     }
 }
 
-const settingsNavDone = document.getElementById('settingsNavDone')
+// settingsNavDone button removed from HTML, functionality moved to back button
+// const settingsNavDone = document.getElementById('settingsNavDone')
 
 /**
  * Set if the settings save (done) button is disabled.
@@ -318,7 +319,7 @@ const settingsNavDone = document.getElementById('settingsNavDone')
  * @param {boolean} v True to disable, false to enable.
  */
 function settingsSaveDisabled(v){
-    settingsNavDone.disabled = v
+    // settingsNavDone disabled - button no longer exists
 }
 
 function fullSettingsSave() {
@@ -329,11 +330,11 @@ function fullSettingsSave() {
     saveShaderpackSettings()
 }
 
-/* Closes the settings view and saves all data. */
-settingsNavDone.onclick = () => {
-    fullSettingsSave()
-    switchView(getCurrentView(), VIEWS.landing)
-}
+/* Settings navigation handled by back button in settings.ejs */
+// settingsNavDone.onclick = () => {
+//     fullSettingsSave()
+//     switchView(getCurrentView(), VIEWS.landing)
+// }
 
 /**
  * Account Management Tab
@@ -1144,19 +1145,38 @@ async function prepareModsTab(first){
  * Java Tab
  */
 
-// DOM Cache
-const settingsMaxRAMRange     = document.getElementById('settingsMaxRAMRange')
-const settingsMinRAMRange     = document.getElementById('settingsMinRAMRange')
-const settingsMaxRAMLabel     = document.getElementById('settingsMaxRAMLabel')
-const settingsMinRAMLabel     = document.getElementById('settingsMinRAMLabel')
-const settingsMemoryTotal     = document.getElementById('settingsMemoryTotal')
-const settingsMemoryAvail     = document.getElementById('settingsMemoryAvail')
-const settingsJavaExecDetails = document.getElementById('settingsJavaExecDetails')
-const settingsJavaReqDesc     = document.getElementById('settingsJavaReqDesc')
-const settingsJvmOptsLink     = document.getElementById('settingsJvmOptsLink')
+// DOM Cache - lazy loaded in prepareJavaTab
+let settingsMaxRAMRange
+let settingsMinRAMRange
+let settingsMaxRAMLabel
+let settingsMinRAMLabel
+let settingsMemoryTotal
+let settingsMemoryAvail
+let settingsJavaExecDetails
+let settingsJavaReqDesc
+let settingsJvmOptsLink
 
-// Bind on change event for min memory container.
-settingsMinRAMRange.onchange = (e) => {
+/**
+ * Initialize Java tab DOM elements
+ */
+function initializeJavaTabDOM() {
+    settingsMaxRAMRange     = document.getElementById('settingsMaxRAMRange')
+    settingsMinRAMRange     = document.getElementById('settingsMinRAMRange')
+    settingsMaxRAMLabel     = document.getElementById('settingsMaxRAMLabel')
+    settingsMinRAMLabel     = document.getElementById('settingsMinRAMLabel')
+    settingsMemoryTotal     = document.getElementById('settingsMemoryTotal')
+    settingsMemoryAvail     = document.getElementById('settingsMemoryAvail')
+    settingsJavaExecDetails = document.getElementById('settingsJavaExecDetails')
+    settingsJavaReqDesc     = document.getElementById('settingsJavaReqDesc')
+    settingsJvmOptsLink     = document.getElementById('settingsJvmOptsLink')
+    
+    // Bind event listeners
+    if(settingsMinRAMRange) settingsMinRAMRange.onchange = minRAMChangeListener
+    if(settingsMaxRAMRange) settingsMaxRAMRange.onchange = maxRAMChangeListener
+}
+
+// Bind on change event for min memory container will be defined in prepareJavaTab
+let minRAMChangeListener = (e) => {
 
     // Current range values
     const sMaxV = Number(settingsMaxRAMRange.getAttribute('value'))
@@ -1189,7 +1209,7 @@ settingsMinRAMRange.onchange = (e) => {
 }
 
 // Bind on change event for max memory container.
-settingsMaxRAMRange.onchange = (e) => {
+let maxRAMChangeListener = (e) => {
     // Current range values
     const sMaxV = Number(settingsMaxRAMRange.getAttribute('value'))
     const sMinV = Number(settingsMinRAMRange.getAttribute('value'))
@@ -1242,8 +1262,9 @@ function calculateRangeSliderMeta(v){
 function bindRangeSlider(){
     Array.from(document.getElementsByClassName('rangeSlider')).map((v) => {
 
-        // Reference the track (thumb).
+        // Reference the track (thumb) and bar
         const track = v.getElementsByClassName('rangeSliderTrack')[0]
+        const bar = v.getElementsByClassName('rangeSliderBar')[0]
 
         // Set the initial slider value.
         const value = v.getAttribute('value')
@@ -1251,9 +1272,8 @@ function bindRangeSlider(){
 
         updateRangedSlider(v, value, ((value-sliderMeta.min)/sliderMeta.step)*sliderMeta.inc)
 
-        // The magic happens when we click on the track.
-        track.onmousedown = (e) => {
-
+        // Function to handle slider movement
+        const handleMouseDown = (e) => {
             // Stop moving the track on mouse up.
             document.onmouseup = (e) => {
                 document.onmousemove = null
@@ -1281,6 +1301,12 @@ function bindRangeSlider(){
                 }
             }
         }
+
+        // The magic happens when we click on the track.
+        track.onmousedown = handleMouseDown
+        
+        // Also allow clicking anywhere on the slider container
+        v.onmousedown = handleMouseDown
     }) 
 }
 
@@ -1314,8 +1340,8 @@ function updateRangedSlider(element, value, notch){
     let cancelled = !element.dispatchEvent(event)
 
     if(!cancelled){
-        track.style.left = notch + '%'
-        bar.style.width = notch + '%'
+        track.style.width = notch + '%'
+        bar.style.left = notch + '%'
     } else {
         element.setAttribute('value', oldVal)
     }
@@ -1386,7 +1412,7 @@ function bindMinMaxRam(server) {
 async function prepareJavaTab(){
     const server = (await DistroAPI.getDistribution()).getServerById(ConfigManager.getSelectedServer())
     bindMinMaxRam(server)
-    bindRangeSlider(server)
+    bindRangeSlider()
     populateMemoryStatus()
     populateJavaReqDesc(server)
     populateJvmOptsLink(server)
@@ -1521,7 +1547,9 @@ function settingsUpdateButtonStatus(text, disabled = false, handler = null){
  */
 function populateSettingsUpdateInformation(data){
     if(data != null){
-        settingsUpdateTitle.innerHTML = isPrerelease(data.version) ? Lang.queryJS('settings.updates.newPreReleaseTitle') : Lang.queryJS('settings.updates.newReleaseTitle')
+        if(settingsUpdateTitle != null) {
+            settingsUpdateTitle.innerHTML = isPrerelease(data.version) ? Lang.queryJS('settings.updates.newPreReleaseTitle') : Lang.queryJS('settings.updates.newReleaseTitle')
+        }
         settingsUpdateChangelogCont.style.display = null
         settingsUpdateChangelogTitle.innerHTML = data.releaseName
         settingsUpdateChangelogText.innerHTML = data.releaseNotes
@@ -1535,7 +1563,9 @@ function populateSettingsUpdateInformation(data){
             settingsUpdateButtonStatus(Lang.queryJS('settings.updates.downloadingButton'), true)
         }
     } else {
-        settingsUpdateTitle.innerHTML = Lang.queryJS('settings.updates.latestVersionTitle')
+        if(settingsUpdateTitle != null) {
+            settingsUpdateTitle.innerHTML = Lang.queryJS('settings.updates.latestVersionTitle')
+        }
         settingsUpdateChangelogCont.style.display = 'none'
         populateVersionInformation(remote.app.getVersion(), settingsUpdateVersionValue, settingsUpdateVersionTitle, settingsUpdateVersionCheck)
         settingsUpdateButtonStatus(Lang.queryJS('settings.updates.checkForUpdatesButton'), false, () => {
@@ -1566,6 +1596,9 @@ function prepareUpdateTab(data = null){
   * @param {boolean} first Whether or not it is the first load.
   */
 async function prepareSettings(first = false) {
+    // Initialize Java tab DOM elements first
+    initializeJavaTabDOM()
+    
     if(first){
         setupSettingsTabs()
         initSettingsValidators()
@@ -1577,6 +1610,12 @@ async function prepareSettings(first = false) {
     prepareAccountsTab()
     await prepareJavaTab()
     prepareAboutTab()
+    
+    // Bind back button to return to landing
+    document.getElementById('settingsBackButton').onclick = e => {
+        fullSettingsSave()
+        switchView(getCurrentView(), VIEWS.landing)
+    }
 }
 
 // Prepare the settings UI on startup.

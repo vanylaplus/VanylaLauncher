@@ -42,6 +42,21 @@ const user_text               = document.getElementById('user_text')
 
 const loggerLanding = LoggerUtil.getLogger('Landing')
 
+/* FAQ Accordion Functions */
+function toggleFaqAnswer(element) {
+    const answer = element.nextElementSibling
+    const isHidden = answer.style.display === 'none' || answer.style.display === ''
+    
+    answer.style.display = isHidden ? 'block' : 'none'
+    element.style.background = isHidden ? 'rgba(120,120,120,0.2)' : 'rgba(120,120,120,0.1)'
+    
+    // Rotate the arrow
+    const arrow = element.querySelector('span:last-child')
+    if(arrow) {
+        arrow.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)'
+    }
+}
+
 /* Launch Progress Wrapper Functions */
 
 /**
@@ -54,6 +69,7 @@ function toggleLaunchArea(loading){
         launch_details.style.display = 'flex'
         launch_content.style.display = 'none'
     } else {
+        // Simply hide the loading area, no fade
         launch_details.style.display = 'none'
         launch_content.style.display = 'inline-flex'
     }
@@ -90,6 +106,20 @@ function setDownloadPercentage(percent){
 }
 
 /**
+ * Set the overall progress with phase tracking.
+ * Converts phase progress (0-100) to overall progress (0-100).
+ * 
+ * @param {number} phaseProgress Current phase progress (0-100)
+ * @param {number} phaseStart Overall start percentage for this phase
+ * @param {number} phaseEnd Overall end percentage for this phase
+ */
+function setOverallProgress(phaseProgress, phaseStart, phaseEnd){
+    const overallPercent = Math.round(phaseStart + ((phaseEnd - phaseStart) * (phaseProgress / 100)))
+    setLaunchPercentage(Math.min(overallPercent, 100))
+    remote.getCurrentWindow().setProgressBar(Math.min(overallPercent, 100) / 100)
+}
+
+/**
  * Enable or disable the launch button.
  * 
  * @param {boolean} val True to enable, false to disable.
@@ -99,7 +129,9 @@ function setLaunchEnabled(val){
 }
 
 // Bind launch button
-document.getElementById('launch_button').addEventListener('click', async e => {
+const _launchBtn = document.getElementById('launch_button')
+if(_launchBtn){
+    _launchBtn.addEventListener('click', async e => {
     loggerLanding.info('Launching game..')
     try {
         const server = (await DistroAPI.getDistribution()).getServerById(ConfigManager.getSelectedServer())
@@ -125,20 +157,147 @@ document.getElementById('launch_button').addEventListener('click', async e => {
         loggerLanding.error('Unhandled error in during launch process.', err)
         showLaunchFailure(Lang.queryJS('landing.launch.failureTitle'), Lang.queryJS('landing.launch.failureText'))
     }
-})
+    })
+}
 
 // Bind settings button
-document.getElementById('settingsMediaButton').onclick = async e => {
+document.getElementById('sidebarSettings').onclick = async e => {
     await prepareSettings()
     switchView(getCurrentView(), VIEWS.settings)
 }
 
+// Bind CGU button
+const cguBtn = document.getElementById('sidebarCGU')
+if(cguBtn) {
+    cguBtn.onclick = e => {
+        switchView(getCurrentView(), VIEWS.cgu)
+    }
+}
+
+// Bind CGU sidebar buttons (News and Info buttons on CGU page)
+const cguNewsBtn = document.getElementById('cguSidebarNews')
+if(cguNewsBtn) {
+    cguNewsBtn.onclick = e => {
+        switchView(getCurrentView(), VIEWS.landing)
+    }
+}
+
+// Bind CGU button on CGU page
+const cguSidebarCGUBtn = document.getElementById('cguSidebarCGU')
+if(cguSidebarCGUBtn) {
+    cguSidebarCGUBtn.onclick = e => {
+        if(getCurrentView() !== VIEWS.cgu) {
+            switchView(getCurrentView(), VIEWS.cgu)
+        }
+    }
+}
+
+// Bind CGU sidebar home button
+const cguSidebarHomeBtn = document.getElementById('cguSidebarHome')
+if(cguSidebarHomeBtn) {
+    cguSidebarHomeBtn.onclick = e => {
+        switchView(getCurrentView(), VIEWS.landing)
+    }
+}
+
+// Bind CGU sidebar news button
+const cguSidebarNewsBtn = document.getElementById('cguSidebarNews')
+if(cguSidebarNewsBtn) {
+    cguSidebarNewsBtn.onclick = e => {
+        // News button on CGU page - add functionality if needed
+    }
+}
+
+// Bind Help button
+const helpBtn = document.getElementById('sidebarHelp')
+if(helpBtn) {
+    helpBtn.onclick = e => {
+        switchView(getCurrentView(), VIEWS.help)
+    }
+}
+
+// Bind Help sidebar buttons on Help page
+const helpSidebarCGUBtn = document.getElementById('helpSidebarCGU')
+if(helpSidebarCGUBtn) {
+    helpSidebarCGUBtn.onclick = e => {
+        switchView(getCurrentView(), VIEWS.cgu)
+    }
+}
+
+// Bind Help button on Help page
+const helpSidebarHelpBtn = document.getElementById('helpSidebarHelp')
+if(helpSidebarHelpBtn) {
+    helpSidebarHelpBtn.onclick = e => {
+        if(getCurrentView() !== VIEWS.help) {
+            switchView(getCurrentView(), VIEWS.help)
+        }
+    }
+}
+
+// Bind Help sidebar home button
+const helpSidebarHomeBtn = document.getElementById('helpSidebarHome')
+if(helpSidebarHomeBtn) {
+    helpSidebarHomeBtn.onclick = e => {
+        switchView(getCurrentView(), VIEWS.landing)
+    }
+}
+
+// Bind Help sidebar news button
+const helpSidebarNewsBtn = document.getElementById('helpSidebarNews')
+if(helpSidebarNewsBtn) {
+    helpSidebarNewsBtn.onclick = e => {
+        // News button on Help page - add functionality if needed
+    }
+}
+
+// Bind Help sidebar settings button
+const helpSidebarSettingsBtn = document.getElementById('helpSidebarSettings')
+if(helpSidebarSettingsBtn) {
+    helpSidebarSettingsBtn.onclick = async e => {
+        await prepareSettings()
+        switchView(getCurrentView(), VIEWS.settings)
+    }
+}
+
+// Bind CGU sidebar settings button
+const cguSidebarSettingsBtn = document.getElementById('cguSidebarSettings')
+if(cguSidebarSettingsBtn) {
+    cguSidebarSettingsBtn.onclick = async e => {
+        await prepareSettings()
+        switchView(getCurrentView(), VIEWS.settings)
+    }
+}
+
+// Bind CGU sidebar help button
+const cguSidebarHelpBtn = document.getElementById('cguSidebarHelp')
+if(cguSidebarHelpBtn) {
+    cguSidebarHelpBtn.onclick = e => {
+        switchView(getCurrentView(), VIEWS.help)
+    }
+}
+
+const cguBackBtn = document.getElementById('cguBackButton')
+if(cguBackBtn) {
+    cguBackBtn.onclick = e => {
+        switchView(getCurrentView(), VIEWS.landing)
+    }
+}
+
+// (Supprime l'ancien binding settingsMediaButton)
+const _settingsBtn = document.getElementById('settingsMediaButton')
+if(_settingsBtn){
+    _settingsBtn.onclick = null
+}
+
 // Bind avatar overlay button.
-document.getElementById('avatarOverlay').onclick = async e => {
-    await prepareSettings()
-    switchView(getCurrentView(), VIEWS.settings, 500, 500, () => {
-        settingsNavItemListener(document.getElementById('settingsNavAccount'), false)
-    })
+const _avatarOverlay = document.getElementById('avatarOverlay')
+if(_avatarOverlay){
+    _avatarOverlay.onclick = async e => {
+        await prepareSettings()
+        switchView(getCurrentView(), VIEWS.settings, 500, 500, () => {
+            settingsNavItemListener(document.getElementById('settingsNavAccount'), false)
+        })
+    }
 }
 
 // Bind selected account
@@ -149,10 +308,38 @@ function updateSelectedAccount(authUser){
             username = authUser.displayName
         }
         if(authUser.uuid != null){
-            document.getElementById('avatarContainer').style.backgroundImage = `url('https://mc-heads.net/body/${authUser.uuid}/right')`
+            // Update landing avatar
+            const landingAvatar = document.getElementById('avatarContainer')
+            if(landingAvatar) {
+                landingAvatar.style.backgroundImage = `url('https://mc-heads.net/body/${authUser.uuid}/right')`
+            }
+            // Update CGU avatar
+            const cguAvatar = document.getElementById('cgu_avatarContainer')
+            if(cguAvatar) {
+                cguAvatar.style.backgroundImage = `url('https://mc-heads.net/body/${authUser.uuid}/right')`
+            }
+            // Update help avatar
+            const helpAvatar = document.getElementById('help_avatarContainer')
+            if(helpAvatar) {
+                helpAvatar.style.backgroundImage = `url('https://mc-heads.net/body/${authUser.uuid}/right')`
+            }
         }
     }
-    user_text.innerHTML = username
+    // Update landing username
+    const landingUserText = document.getElementById('user_text')
+    if(landingUserText) {
+        landingUserText.innerHTML = username
+    }
+    // Update CGU username
+    const cguUserText = document.getElementById('cgu_user_text')
+    if(cguUserText) {
+        cguUserText.innerHTML = username
+    }
+    // Update help username
+    const helpUserText = document.getElementById('help_user_text')
+    if(helpUserText) {
+        helpUserText.innerHTML = username
+    }
 }
 updateSelectedAccount(ConfigManager.getSelectedAccount())
 
@@ -476,7 +663,7 @@ async function dlAsync(login = true) {
 
     setLaunchDetails(Lang.queryJS('landing.dlAsync.pleaseWait'))
     toggleLaunchArea(true)
-    setLaunchPercentage(0, 100)
+    setLaunchPercentage(0)
 
     const fullRepairModule = new FullRepair(
         ConfigManager.getCommonDirectory(),
@@ -504,9 +691,10 @@ async function dlAsync(login = true) {
     let invalidFileCount = 0
     try {
         invalidFileCount = await fullRepairModule.verifyFiles(percent => {
-            setLaunchPercentage(percent)
+            // File verification progress: 0-50% of overall
+            setOverallProgress(percent, 0, 50)
         })
-        setLaunchPercentage(100)
+        setLaunchPercentage(50)
     } catch (err) {
         loggerLaunchSuite.error('Error during file validation.')
         showLaunchFailure(Lang.queryJS('landing.dlAsync.errorDuringFileVerificationTitle'), err.displayable || Lang.queryJS('landing.dlAsync.seeConsoleForDetails'))
@@ -517,12 +705,12 @@ async function dlAsync(login = true) {
     if(invalidFileCount > 0) {
         loggerLaunchSuite.info('Downloading files.')
         setLaunchDetails(Lang.queryJS('landing.dlAsync.downloadingFiles'))
-        setLaunchPercentage(0)
         try {
             await fullRepairModule.download(percent => {
-                setDownloadPercentage(percent)
+                // Download progress: 50-100% of overall
+                setOverallProgress(percent, 50, 100)
             })
-            setDownloadPercentage(100)
+            setLaunchPercentage(100)
         } catch(err) {
             loggerLaunchSuite.error('Error during file download.')
             showLaunchFailure(Lang.queryJS('landing.dlAsync.errorDuringFileDownloadTitle'), err.displayable || Lang.queryJS('landing.dlAsync.seeConsoleForDetails'))
@@ -530,6 +718,7 @@ async function dlAsync(login = true) {
         }
     } else {
         loggerLaunchSuite.info('No invalid files, skipping download.')
+        setLaunchPercentage(100)
     }
 
     // Remove download bar.
@@ -756,18 +945,25 @@ function setNewsLoading(val){
 }
 
 // Bind retry button.
-newsErrorRetry.onclick = () => {
-    $('#newsErrorFailed').fadeOut(250, () => {
-        initNews()
-        $('#newsErrorLoading').fadeIn(250)
-    })
+const _newsErrorRetry = document.getElementById('newsErrorRetry')
+if(_newsErrorRetry){
+    _newsErrorRetry.onclick = () => {
+        $('#newsErrorFailed').fadeOut(250, () => {
+            initNews()
+            $('#newsErrorLoading').fadeIn(250)
+        })
+    }
 }
 
-newsArticleContentScrollable.onscroll = (e) => {
-    if(e.target.scrollTop > Number.parseFloat($('.newsArticleSpacerTop').css('height'))){
-        newsContent.setAttribute('scrolled', '')
-    } else {
-        newsContent.removeAttribute('scrolled')
+if(newsArticleContentScrollable){
+    newsArticleContentScrollable.onscroll = (e) => {
+        const spacer = $('.newsArticleSpacerTop')
+        const spacerH = spacer.length ? Number.parseFloat(spacer.css('height')) : 0
+        if(e.target.scrollTop > spacerH){
+            newsContent.setAttribute('scrolled', '')
+        } else {
+            newsContent.removeAttribute('scrolled')
+        }
     }
 }
 
@@ -795,7 +991,7 @@ let newsAlertShown = false
  */
 function showNewsAlert(){
     newsAlertShown = true
-    $(newsButtonAlert).fadeIn(250)
+    $('#newsButtonAlert').fadeIn(250)
 }
 
 async function digestMessage(str) {
@@ -1023,4 +1219,463 @@ async function loadNews(){
     })
 
     return await promise
+}
+
+// Wire refresh button for landing page (moved from inline script to comply with CSP)
+function wireRefreshButtonLanding() {
+    const btn = document.getElementById('refreshMediaButtonLanding')
+    if(!btn) return
+    
+    // Remove all existing click listeners by cloning
+    const newBtn = btn.cloneNode(true)
+    btn.parentNode.replaceChild(newBtn, btn)
+    
+    const hardReload = () => {
+        try {
+            if (window.location && typeof window.location.reload === 'function') {
+                window.location.reload()
+                return
+            }
+        } catch (_) {}
+        try { window.location.href = window.location.href } catch (_) {}
+    }
+    
+    newBtn.addEventListener('click', (e) => {
+        e.preventDefault()
+        hardReload()
+    })
+}
+
+// Wire refresh button for CGU page
+function wireRefreshButtonCGU() {
+    const btn = document.getElementById('refreshMediaButton')
+    if(!btn) return
+    
+    // Remove all existing click listeners by cloning
+    const newBtn = btn.cloneNode(true)
+    btn.parentNode.replaceChild(newBtn, btn)
+    
+    const hardReload = () => {
+        try {
+            if (window.location && typeof window.location.reload === 'function') {
+                window.location.reload()
+                return
+            }
+        } catch (_) {}
+        try { window.location.href = window.location.href } catch (_) {}
+    }
+    
+    newBtn.addEventListener('click', (e) => {
+        e.preventDefault()
+        hardReload()
+    })
+}
+
+// Wire refresh button for Help page
+function wireRefreshButtonHelp() {
+    const btn = document.getElementById('refreshMediaButtonHelp')
+    if(!btn) return
+    
+    // Remove all existing click listeners by cloning
+    const newBtn = btn.cloneNode(true)
+    btn.parentNode.replaceChild(newBtn, btn)
+    
+    const hardReload = () => {
+        try {
+            if (window.location && typeof window.location.reload === 'function') {
+                window.location.reload()
+                return
+            }
+        } catch (_) {}
+        try { window.location.href = window.location.href } catch (_) {}
+    }
+    
+    newBtn.addEventListener('click', (e) => {
+        e.preventDefault()
+        hardReload()
+    })
+}
+
+// Wire both buttons on initial load
+document.addEventListener('DOMContentLoaded', () => {
+    wireRefreshButtonLanding()
+    wireRefreshButtonCGU()
+    wireRefreshButtonHelp()
+})
+
+// Also wire immediately in case DOM is already loaded
+if (document.readyState !== 'loading') {
+    wireRefreshButtonLanding()
+    wireRefreshButtonCGU()
+    wireRefreshButtonHelp()
+}
+
+// Re-wire whenever pages become visible
+const observer = new MutationObserver(() => {
+    const landingContainer = document.getElementById('landingContainer')
+    const cguContainer = document.getElementById('cguContainer')
+    
+    if (landingContainer && landingContainer.style.display !== 'none') {
+        wireRefreshButtonLanding()
+    }
+    if (cguContainer && cguContainer.style.display !== 'none') {
+        wireRefreshButtonCGU()
+    }
+})
+
+observer.observe(document.body, { attributes: true, subtree: true })
+
+// Load news articles and populate news cards
+async function loadNewsArticles() {
+    try {
+        loggerLanding.info('Starting to load news articles...')
+        
+        const distroData = await DistroAPI.getDistribution()
+        if(!distroData || !distroData.rawDistribution || !distroData.rawDistribution.rss) {
+            loggerLanding.warn('No RSS feed provided in distribution.')
+            return
+        }
+
+        const newsFeed = distroData.rawDistribution.rss
+        loggerLanding.info('RSS Feed URL: ' + newsFeed)
+        const newsHost = new URL(newsFeed).origin + '/'
+        
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                url: newsFeed,
+                dataType: 'xml',
+                success: (data) => {
+                    loggerLanding.info('RSS data received')
+                    const items = $(data).find('item')
+                    loggerLanding.info('Found ' + items.length + ' items in RSS')
+                    
+                    const articles = []
+
+                    for(let i = 0; i < Math.min(items.length, 2); i++){
+                        const el = $(items[i])
+                        let title = el.find('title').text()
+                        let link = el.find('link').text()
+                        let content = el.find('content\\:encoded').text()
+                        let pubDate = el.find('pubDate').text()
+                        
+                        loggerLanding.info('Article ' + i + ': ' + title)
+                        
+                        articles.push({
+                            title: title || 'Untitled',
+                            link: link || '#',
+                            content: content || '',
+                            pubDate: pubDate || ''
+                        })
+                    }
+
+                    // Populate news cards with article titles
+                    articles.forEach((article, index) => {
+                        const titleEl = document.getElementById('newsTitle' + index)
+                        const cardEl = document.getElementById('newsCard' + index)
+                        
+                        loggerLanding.info('Populating card ' + index + ': titleEl=' + (titleEl ? 'found' : 'not found') + ', cardEl=' + (cardEl ? 'found' : 'not found'))
+                        
+                        // Store articles in global variable for "See all news" modal
+                        allNewsArticles[index] = article
+                        
+                        // Keep original card title, don't replace it
+                        if(cardEl) {
+                            cardEl.style.cursor = 'pointer'
+                            cardEl.onclick = (e) => {
+                                e.preventDefault()
+                                e.stopPropagation()
+                                loggerLanding.info('Opening article in modal: ' + article.title)
+                                
+                                // Display news in modal instead of opening new window
+                                displayNewsArticle(article, index, 'news')
+                            }
+                            loggerLanding.info('Set click handler for card ' + index)
+                        }
+                    })
+
+                    loggerLanding.info('News articles loaded successfully: ' + articles.length)
+                    resolve(articles)
+                },
+                error: (err) => {
+                    loggerLanding.error('AJAX error loading RSS: ' + err.status + ' ' + err.statusText, err)
+                    reject(err)
+                },
+                timeout: 5000
+            })
+        })
+    } catch(err) {
+        loggerLanding.error('Error loading news articles: ' + err.message, err)
+    }
+}
+
+// Load news from custom RSS URL (for additional news sources)
+function loadNewsFromURL(rssUrl, cardPrefix) {
+    try {
+        loggerLanding.info('Loading news from custom URL: ' + rssUrl)
+        
+        $.ajax({
+            url: rssUrl,
+            dataType: 'xml',
+            success: (data) => {
+                loggerLanding.info('RSS data received from ' + rssUrl)
+                const items = $(data).find('item')
+                loggerLanding.info('Found ' + items.length + ' items in RSS from ' + cardPrefix)
+                
+                const articles = []
+
+                for(let i = 0; i < Math.min(items.length, 2); i++){
+                    const el = $(items[i])
+                    let title = el.find('title').text()
+                    let link = el.find('link').text()
+                    let content = el.find('content\\:encoded').text()
+                    let pubDate = el.find('pubDate').text()
+                    
+                    loggerLanding.info('Article from ' + cardPrefix + ' ' + i + ': ' + title)
+                    
+                    articles.push({
+                        title: title || 'Untitled',
+                        link: link || '#',
+                        content: content || '',
+                        pubDate: pubDate || ''
+                    })
+                }
+
+                // Populate news cards with article titles
+                articles.forEach((article, index) => {
+                    const titleEl = document.getElementById(cardPrefix + 'Title' + index)
+                    const cardEl = document.getElementById(cardPrefix + 'Card' + index)
+                    
+                    loggerLanding.info('Populating ' + cardPrefix + ' card ' + index + ': titleEl=' + (titleEl ? 'found' : 'not found') + ', cardEl=' + (cardEl ? 'found' : 'not found'))
+                    
+                    // Store articles in global variable for "See all news" modal (offset by 1 for event articles)
+                    if(cardPrefix === 'event') {
+                        allNewsArticles[1] = article
+                    }
+                    
+                    // Keep original card title, don't replace it
+                    if(cardEl) {
+                        cardEl.style.cursor = 'pointer'
+                        cardEl.onclick = (e) => {
+                            e.preventDefault()
+                            e.stopPropagation()
+                            loggerLanding.info('Opening ' + cardPrefix + ' article in modal: ' + article.title)
+                            
+                            // Display news in modal
+                            displayNewsArticle(article, index, cardPrefix)
+                        }
+                        loggerLanding.info('Set click handler for ' + cardPrefix + ' card ' + index)
+                    }
+                })
+
+                loggerLanding.info('Custom news articles loaded successfully from ' + cardPrefix + ': ' + articles.length)
+            },
+            error: (err) => {
+                loggerLanding.error('AJAX error loading RSS from ' + rssUrl + ': ' + err.status + ' ' + err.statusText, err)
+            },
+            timeout: 5000
+        })
+    } catch(err) {
+        loggerLanding.error('Error loading news from URL: ' + err.message, err)
+    }
+}
+
+// Function to display news article in modal overlay
+function displayNewsArticle(article, index, cardPrefix = 'news') {
+    try {
+        loggerLanding.info('Displaying article ' + index + ' in modal')
+        
+        // Get modal elements
+        const newsModalOverlay = document.getElementById('newsModalOverlay')
+        const newsModalTitle = document.getElementById('newsModalTitle')
+        const newsModalContent = document.getElementById('newsModalContent')
+        
+        if(!newsModalOverlay || !newsModalTitle || !newsModalContent) {
+            loggerLanding.error('Modal elements not found: overlay=' + (newsModalOverlay ? 'yes' : 'no') + ', title=' + (newsModalTitle ? 'yes' : 'no') + ', content=' + (newsModalContent ? 'yes' : 'no'))
+            return
+        }
+        
+        // Populate modal with article data
+        // Use card title if available, otherwise article title
+        let cardTitle = null
+        const titleEl = document.getElementById(cardPrefix + 'Title' + index)
+        if(titleEl) {
+            cardTitle = titleEl.textContent
+        }
+        newsModalTitle.textContent = cardTitle || article.title || 'Untitled Article'
+        
+        // Set article content (with fallback if HTML content not available)
+        let contentHTML = article.content
+        if(!contentHTML) {
+            contentHTML = '<p>No content available for this article.</p>'
+        }
+        newsModalContent.innerHTML = contentHTML
+        
+        // Show modal with fade-in animation
+        newsModalOverlay.classList.add('show')
+        
+        loggerLanding.info('Article ' + index + ' displayed in modal: ' + article.title)
+    } catch(err) {
+        loggerLanding.error('Error displaying article: ' + err.message, err)
+    }
+}
+
+// Function to close news modal
+function closeNewsModal() {
+    try {
+        const newsModalOverlay = document.getElementById('newsModalOverlay')
+        if(newsModalOverlay) {
+            newsModalOverlay.classList.remove('show')
+            loggerLanding.info('News modal closed')
+        }
+    } catch(err) {
+        loggerLanding.error('Error closing modal: ' + err.message, err)
+    }
+}
+
+// Load news on page init - give it time to ensure DOM is ready
+setTimeout(() => {
+    loggerLanding.info('Executing delayed news load...')
+    loadNewsArticles().catch(err => {
+        loggerLanding.warn('News load failed: ' + err)
+    })
+    
+    // Load news from custom RSS URL for the second card
+    loadNewsFromURL('https://vanylaplus.fr/news.xml', 'event')
+    
+    // Setup news modal close handlers
+    const newsModalOverlay = document.getElementById('newsModalOverlay')
+    const newsModalCloseBtn = document.getElementById('newsModalCloseBtn')
+    
+    if(newsModalOverlay) {
+        // Close modal when clicking close button
+        if(newsModalCloseBtn) {
+            newsModalCloseBtn.addEventListener('click', closeNewsModal)
+        }
+        
+        // Close modal when clicking on the overlay background (outside the box)
+        newsModalOverlay.addEventListener('click', (e) => {
+            if(e.target === newsModalOverlay) {
+                closeNewsModal()
+            }
+        })
+        
+        // Close with Escape key
+        document.addEventListener('keydown', (e) => {
+            if(e.key === 'Escape' && newsModalOverlay.classList.contains('show')) {
+                closeNewsModal()
+            }
+        })
+    }
+    
+    // Setup all news modal close handlers
+    const allNewsModalOverlay = document.getElementById('allNewsModalOverlay')
+    const allNewsModalCloseBtn = document.getElementById('allNewsModalCloseBtn')
+    
+    if(allNewsModalOverlay) {
+        // Close modal when clicking close button
+        if(allNewsModalCloseBtn) {
+            allNewsModalCloseBtn.addEventListener('click', closeAllNewsModal)
+        }
+        
+        // Close modal when clicking on the overlay background
+        allNewsModalOverlay.addEventListener('click', (e) => {
+            if(e.target === allNewsModalOverlay) {
+                closeAllNewsModal()
+            }
+        })
+        
+        // Close with Escape key
+        document.addEventListener('keydown', (e) => {
+            if(e.key === 'Escape' && allNewsModalOverlay.style.opacity !== '0') {
+                closeAllNewsModal()
+            }
+        })
+    }
+}, 1000)
+
+// Store all loaded articles for the "See all news" modal
+let allNewsArticles = []
+
+// Function to open the "See all news" modal with all loaded news
+function openAllNewsModal() {
+    try {
+        console.log('openAllNewsModal called')
+        loggerLanding.info('Opening all news modal')
+        
+        const allNewsModalOverlay = document.getElementById('allNewsModalOverlay')
+        const allNewsModalContent = document.getElementById('allNewsModalContent')
+        
+        console.log('Modal overlay:', allNewsModalOverlay)
+        console.log('Modal content:', allNewsModalContent)
+        
+        if(!allNewsModalOverlay || !allNewsModalContent) {
+            loggerLanding.error('All news modal elements not found')
+            console.error('Modal elements not found!')
+            return
+        }
+        
+        // Create news cards HTML
+        let cardsHTML = ''
+        
+        // Get news cards from DOM
+        const newsCard0 = document.getElementById('newsCard0')
+        const eventCard0 = document.getElementById('eventCard0')
+        
+        console.log('newsCard0:', newsCard0)
+        console.log('eventCard0:', eventCard0)
+        
+        if(newsCard0) {
+            const newsTitle0 = document.getElementById('newsTitle0')
+            const newsCardBg = newsCard0.querySelector('.news-card-background')
+            const bgStyle = newsCardBg ? newsCardBg.style.background : 'url(https://vanylaplus.fr/images/news1.png) center/cover no-repeat'
+            console.log('newsTitle0:', newsTitle0)
+            console.log('bgStyle:', bgStyle)
+            cardsHTML += `
+                <div class="news-card" style="cursor:pointer; height: 280px !important; background: ${bgStyle}; position:relative;" onclick="displayNewsArticle(allNewsArticles[0], 0, 'news'); closeAllNewsModal();">
+                    <div class="news-card-overlay"></div>
+                    <div class="news-card-content">
+                        <h3 class="news-card-title">${newsTitle0 ? newsTitle0.textContent : 'News'}</h3>
+                    </div>
+                </div>
+            `
+        }
+        
+        if(eventCard0) {
+            const eventTitle0 = document.getElementById('eventTitle0')
+            const eventCardBg = eventCard0.querySelector('.news-card-background')
+            const bgStyle = eventCardBg ? eventCardBg.style.background : 'url(https://vanylaplus.fr/images/newsbase.png) center/cover no-repeat'
+            cardsHTML += `
+                <div class="news-card" style="cursor:pointer; height: 280px !important; background: ${bgStyle}; position:relative;" onclick="displayNewsArticle(allNewsArticles[1], 0, 'event'); closeAllNewsModal();">
+                    <div class="news-card-overlay"></div>
+                    <div class="news-card-content">
+                        <h3 class="news-card-title">${eventTitle0 ? eventTitle0.textContent : 'Event'}</h3>
+                    </div>
+                </div>
+            `
+        }
+        
+        console.log('cardsHTML:', cardsHTML)
+        allNewsModalContent.innerHTML = cardsHTML
+        allNewsModalOverlay.style.opacity = '1'
+        allNewsModalOverlay.style.pointerEvents = 'auto'
+        
+        loggerLanding.info('All news modal opened with cards HTML')
+    } catch(err) {
+        loggerLanding.error('Error opening all news modal: ' + err.message, err)
+        console.error('Error opening all news modal:', err)
+    }
+}
+
+// Function to close the all news modal
+function closeAllNewsModal() {
+    try {
+        const allNewsModalOverlay = document.getElementById('allNewsModalOverlay')
+        if(allNewsModalOverlay) {
+            allNewsModalOverlay.style.opacity = '0'
+            allNewsModalOverlay.style.pointerEvents = 'none'
+            loggerLanding.info('All news modal closed')
+        }
+    } catch(err) {
+        loggerLanding.error('Error closing all news modal: ' + err.message, err)
+    }
 }

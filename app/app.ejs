@@ -12,6 +12,8 @@
             background-image: url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD//gA+Q1JFQVRPUjogZ2QtanBlZyB2MS4wICh1c2luZyBJSkcgSlBFRyB2ODApLCBkZWZhdWx0IHF1YWxpdHkK/9sAQwAIBgYHBgUIBwcHCQkICgwUDQwLCwwZEhMPFB0aHx4dGhwcICQuJyAiLCMcHCg3KSwwMTQ0NB8nOT04MjwuMzQy/9sAQwEJCQkMCwwYDQ0YMiEcITIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIy/8AAEQgAPwBwAwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/aAAwDAQACEQMRAD8A8VooopDCiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAP/9k=');
             background-size: cover;
             -webkit-user-select: none;
+            overflow: hidden;
+            background-color: transparent;
         }
 
         #main {
@@ -27,19 +29,17 @@
             filter: blur(3px) contrast(0.9) brightness(1.0);
         }
 
-        /* ------------------------------------------------------------
-           LOADER "Windows-like" (ring de points) - 5 points
-           Basé sur une recréation Windows 10 (rotation + opacité),
-           adaptée à 5 points + intégrée sous ton logo.
-           ------------------------------------------------------------ */
+        /* Loader - Barre de chargement moderne */
+        #loadingContainer {
+            background: transparent !important;
+        }
 
-        /* On écrase au besoin les styles éventuels de launcher.css */
         #loadingContainer #loadSpinnerContainer{
             display: flex !important;
             flex-direction: column !important;
             align-items: center !important;
             justify-content: center !important;
-            gap: 0 !important;
+            gap: 40px !important;
             position: relative !important;
         }
 
@@ -47,78 +47,45 @@
             display: block !important;
             position: static !important;
             transform: none !important;
+            width: 120px !important;
+            height: 120px !important;
         }
 
-        #loadingContainer #winLoader{
-            /* taille/placement conservés */
-            --spinner-size: 52px;
-            --dot-size: 7px;
-            --duration: 5s;     /* ressemble au rythme Windows (pas “trop rapide”) */
-            --gap: 0.22s;       /* espacement temporel entre dots */
-            --radius: calc((var(--spinner-size) - var(--dot-size)) / 2);
-
-            position: relative !important;
-            width: var(--spinner-size);
-            height: var(--spinner-size);
-            margin-top: 46px !important; /* distance sous le logo */
-            pointer-events: none;
+        /* Texte de chargement */
+        #loadingContainer #loadingText {
+            font-size: 1.1em !important;
+            color: #fff !important;
+            font-weight: 500 !important;
+            letter-spacing: 0.5px !important;
+            margin-bottom: 16px !important;
         }
 
-        /* Chaque “slot” (dot) couvre le cercle entier et tourne */
-        #loadingContainer #winLoader .winDot{
-            position: absolute;
-            inset: 0;
-            opacity: 0;
-
-            /* easing Windows-like (accélère puis ralentit) */
-            animation:
-              winR var(--duration) infinite cubic-bezier(0.15, 0.55, 0.85, 0.45),
-              winO var(--duration) infinite step-end;
-
-            animation-fill-mode: both;
-            will-change: transform, opacity;
+        /* Barre de chargement moderne */
+        #loadingContainer #progressBar {
+            width: 300px !important;
+            height: 4px !important;
+            background: rgba(255,255,255,0.2) !important;
+            border-radius: 2px !important;
+            overflow: hidden !important;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
         }
 
-        /* Le point lui-même est placé sur le rayon */
-        #loadingContainer #winLoader .winDot::after{
-            content: "";
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            width: var(--dot-size);
-            height: var(--dot-size);
-            border-radius: 999px;
-            background: rgba(255,255,255,0.92);
-
-            /* centre -> puis descend de 'radius' (donc sur le cercle) */
-            transform: translate(-50%, calc(-50% + var(--radius)));
+        #loadingContainer #progressFill {
+            height: 100% !important;
+            background: linear-gradient(90deg, #fff 0%, rgba(255,255,255,0.8) 100%) !important;
+            border-radius: 2px !important;
+            animation: progressAnimation 2s ease-in-out infinite !important;
         }
 
-        /* 5 points “en poursuite” : delays négatifs (démarre direct, spacing stable) */
-        #loadingContainer #winLoader .winDot:nth-child(1){ animation-delay:  0s; }
-        #loadingContainer #winLoader .winDot:nth-child(2){ animation-delay: calc(-1 * var(--gap) * 1); }
-        #loadingContainer #winLoader .winDot:nth-child(3){ animation-delay: calc(-1 * var(--gap) * 2); }
-        #loadingContainer #winLoader .winDot:nth-child(4){ animation-delay: calc(-1 * var(--gap) * 3); }
-        #loadingContainer #winLoader .winDot:nth-child(5){ animation-delay: calc(-1 * var(--gap) * 4); }
-
-        /* Rotation “Windows-like” : 2 tours avec pause en fin de cycle */
-        @keyframes winR {
-            0%   { transform: rotate(-90deg); }
-            35%  { transform: rotate(270deg); }
-            70%  { transform: rotate(630deg); }
-            100% { transform: rotate(630deg); }
-        }
-
-        /* Fenêtre d’opacité (les points “s’éteignent” après un certain temps) */
-        @keyframes winO {
-            0%   { opacity: 1; }
-            70%  { opacity: 0; }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            #loadingContainer #winLoader .winDot{
-                animation: none;
-                opacity: 0.9;
+        @keyframes progressAnimation {
+            0% {
+                width: 0%;
+            }
+            50% {
+                width: 100%;
+            }
+            100% {
+                width: 0%;
             }
         }
     </style>
@@ -133,6 +100,8 @@
         <%- include('waiting') %>
         <%- include('loginOptions') %>
         <%- include('settings') %>
+        <%- include('cgu') %>
+        <%- include('help') %>
         <%- include('landing') %>
     </div>
 
@@ -141,19 +110,16 @@
     <div id="loadingContainer">
         <div id="loadingContent">
             <div id="loadSpinnerContainer">
-
                 <!-- Logo -->
                 <img id="loadCenterImage" src="assets/images/LoadingSeal.png">
 
-                <!-- Loader Windows-like EN DESSOUS (5 points) -->
-                <div id="winLoader" role="status" aria-label="Loading">
-                    <div class="winDot"></div>
-                    <div class="winDot"></div>
-                    <div class="winDot"></div>
-                    <div class="winDot"></div>
-                    <div class="winDot"></div>
-                </div>
+                <!-- Texte -->
+                <div id="loadingText">Chargement de VanylaPlus Launcher</div>
 
+                <!-- Barre de chargement -->
+                <div id="progressBar">
+                    <div id="progressFill"></div>
+                </div>
             </div>
         </div>
     </div>

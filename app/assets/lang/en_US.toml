@@ -300,6 +300,7 @@ selectAnotherAccountButton = "Sélectionner un autre compte"
 checkingForUpdateButton = "Vérification des mises à jour..."
 installNowButton = "Installer maintenant"
 checkForUpdatesButton = "Vérifier les mises à jour"
+noUpdateAvailableButton = "✓ Tout est à jour"
 
 [js.auth.microsoft.error]
 noProfileTitle = "Erreur pendant la connexion :<br>Profil non configuré"

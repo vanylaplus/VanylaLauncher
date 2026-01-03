@@ -1,0 +1,968 @@
+/* ===== SETTINGS PAGE STYLES ===== */
+/* Applied on top of landing.css - all settings-specific overrides and new styles */
+
+/* ===== LAUNCHER.CSS OVERRIDES ===== */
+/* Override the old settings layout styles from launcher.css */
+
+/* Remove the shadow gradient before element */
+#settingsContainer:before {
+    display: none !important;
+}
+
+/* Ensure background is correct */
+#settingsContainer {
+    background: linear-gradient(135deg, #18191c 0%, #1a1b20 100%) !important;
+}
+
+.landing-main-column {
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 !important;
+    width: calc(100% - 80px) !important;
+    height: 100% !important;
+    overflow: hidden !important;
+}
+
+/* OVERRIDE settingsContainerLeft to use the sidebar layout */
+#settingsContainerLeft {
+    padding: 0 !important;
+    height: auto !important;
+    width: 220px !important;
+    box-sizing: border-box !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
+    background: rgba(0, 0, 0, 0.2) !important;
+    overflow-y: auto !important;
+    flex-shrink: 0 !important;
+}
+
+#settingsNavContainer {
+    height: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+#settingsNavHeader {
+    height: auto !important;
+    padding: 16px !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+#settingsNavHeaderText {
+    font-size: 0.85em !important;
+}
+
+#settingsNavItemsContainer {
+    height: auto !important;
+    flex: 1 !important;
+    box-sizing: border-box !important;
+    overflow-y: auto !important;
+}
+
+#settingsNavItemsContent {
+    height: auto !important;
+    position: relative !important;
+}
+
+#settingsNavContentBottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+    padding: 12px 16px !important;
+}
+
+/* ===== SETTINGS CONTAINER RIGHT WRAPPER ===== */
+/* ===== SETTINGS CONTAINER RIGHT WRAPPER ===== */
+#settingsContainerRight {
+    flex: 1 !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    padding: 24px !important;
+    background: linear-gradient(180deg, rgba(24, 25, 28, 0.7), rgba(24, 25, 28, 0.9)) !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+#settingsContainerRight > div {
+    max-width: 900px !important;
+}
+
+/* Override launcher.css settingsTab scrolling behavior */
+.settingsTab {
+    width: 100% !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.settingsTab > *:first-child {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+.settingsTab > *:last-child {
+    padding-bottom: 0 !important;
+}
+
+/* ===== SETTINGS TOPBAR OVERRIDE ===== */
+.landing-topbar {
+    background: linear-gradient(180deg, rgba(24, 25, 28, 0.95), rgba(24, 25, 28, 0.9)) !important;
+    border-bottom: 1px solid rgba(0, 144, 255, 0.2) !important;
+}
+
+.quick-play-label {
+    font-size: 0.75em !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    color: #0090ff !important;
+    text-shadow: 0 0 8px rgba(0, 144, 255, 0.3) !important;
+}
+
+.quick-play-divider {
+    width: 1px !important;
+    height: 24px !important;
+    background: rgba(0, 144, 255, 0.2) !important;
+}
+
+/* ===== SETTINGS NAVIGATION ITEMS STYLING ===== */
+.settingsNavItem {
+    transition: all 0.2s ease !important;
+    position: relative !important;
+}
+
+.settingsNavItem:hover {
+    background-color: rgba(0, 144, 255, 0.1) !important;
+    color: #0090ff !important;
+}
+
+.settingsNavItem[selected] {
+    color: #0090ff !important;
+    border-left-color: #0090ff !important;
+}
+
+/* ===== SETTINGS TAB HEADERS ===== */
+.settingsTabHeader {
+    margin-bottom: 24px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+}
+
+.settingsTabHeaderText {
+    font-size: 1.3em !important;
+    font-weight: 600 !important;
+    color: #fff !important;
+}
+
+.settingsTabHeaderDesc {
+    font-size: 0.9em !important;
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* ===== SETTINGS FIELD CONTAINERS ===== */
+.settingsFieldContainer {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 16px 0 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.settingsFieldLeft {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+}
+
+.settingsFieldRight {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+.settingsFieldTitle {
+    font-size: 1em !important;
+    font-weight: 500 !important;
+    color: #fff !important;
+}
+
+.settingsFieldDesc {
+    font-size: 0.85em !important;
+    color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* ===== TOGGLE SWITCHES ===== */
+.toggleSwitch {
+    position: relative !important;
+    display: inline-block !important;
+    width: 50px !important;
+    height: 24px !important;
+    cursor: pointer !important;
+}
+
+.toggleSwitch input {
+    opacity: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+}
+
+.toggleSwitchSlider {
+    position: absolute !important;
+    cursor: pointer !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    background-color: rgba(255, 255, 255, 0.2) !important;
+    transition: 0.3s !important;
+    border-radius: 24px !important;
+}
+
+.toggleSwitchSlider:before {
+    position: absolute !important;
+    content: "" !important;
+    height: 18px !important;
+    width: 18px !important;
+    left: 3px !important;
+    bottom: 3px !important;
+    background-color: #fff !important;
+    transition: 0.3s !important;
+    border-radius: 50% !important;
+}
+
+input:checked + .toggleSwitchSlider {
+    background-color: #0090ff !important;
+    box-shadow: 0 0 12px rgba(0, 144, 255, 0.4) !important;
+}
+
+input:checked + .toggleSwitchSlider:before {
+    transform: translateX(26px) !important;
+}
+
+/* ===== FILE SELECTORS ===== */
+.settingsFileSelContainer {
+    margin: 24px 0 !important;
+    padding: 16px !important;
+    background: rgba(0, 144, 255, 0.05) !important;
+    border: 1px solid rgba(0, 144, 255, 0.2) !important;
+    border-radius: 8px !important;
+}
+
+.settingsFileSelTitle {
+    font-size: 1.05em !important;
+    font-weight: 600 !important;
+    color: #fff !important;
+    margin-bottom: 12px !important;
+}
+
+.settingsFileSelContent {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    margin-bottom: 12px !important;
+}
+
+.settingsFileSelIcon {
+    width: 40px !important;
+    min-width: 40px !important;
+    height: 40px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    opacity: 0.6 !important;
+}
+
+.settingsFileSelVal {
+    flex: 1 !important;
+    padding: 8px 12px !important;
+    background: rgba(0, 0, 0, 0.3) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 4px !important;
+    color: #fff !important;
+    font-size: 0.9em !important;
+}
+
+.settingsFileSelVal:disabled {
+    opacity: 0.6 !important;
+    cursor: not-allowed !important;
+}
+
+.settingsFileSelButton {
+    padding: 8px 16px !important;
+    background: rgba(0, 144, 255, 0.2) !important;
+    border: 1px solid rgba(0, 144, 255, 0.4) !important;
+    border-radius: 4px !important;
+    color: #0090ff !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    font-weight: 500 !important;
+}
+
+.settingsFileSelButton:hover {
+    background: rgba(0, 144, 255, 0.3) !important;
+    border-color: #0090ff !important;
+    box-shadow: 0 0 8px rgba(0, 144, 255, 0.3) !important;
+}
+
+.settingsFileSelDesc {
+    font-size: 0.85em !important;
+    color: rgba(255, 255, 255, 0.5) !important;
+    margin-top: 8px !important;
+    line-height: 1.5 !important;
+}
+
+.settingsFileSelDesc strong {
+    color: #0090ff !important;
+}
+
+.settingsFileSelDesc a {
+    color: #0090ff !important;
+    text-decoration: none !important;
+}
+
+.settingsFileSelDesc a:hover {
+    text-decoration: underline !important;
+}
+
+/* ===== RESOLUTION SETTINGS ===== */
+#settingsGameResolutionContainer {
+    margin: 24px 0 !important;
+}
+
+#settingsGameResolutionContent {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    margin-top: 12px !important;
+}
+
+#settingsGameResolutionContent input {
+    width: 100px !important;
+    padding: 8px !important;
+    background: rgba(0, 0, 0, 0.3) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 4px !important;
+    color: #fff !important;
+}
+
+#settingsGameResolutionCross {
+    color: rgba(255, 255, 255, 0.4) !important;
+    font-size: 1.2em !important;
+}
+
+/* ===== MEMORY SETTINGS ===== */
+#settingsMemoryContainer {
+    margin: 24px 0 !important;
+    padding: 16px !important;
+    background: rgba(0, 144, 255, 0.05) !important;
+    border: 1px solid rgba(0, 144, 255, 0.2) !important;
+    border-radius: 8px !important;
+}
+
+#settingsMemoryTitle {
+    font-size: 1.05em !important;
+    font-weight: 600 !important;
+    color: #fff !important;
+    margin-bottom: 16px !important;
+}
+
+#settingsMemoryContent {
+    display: flex !important;
+    gap: 32px !important;
+}
+
+#settingsMemoryContentLeft {
+    flex: 1 !important;
+}
+
+#settingsMemoryContentRight {
+    min-width: 200px !important;
+}
+
+.settingsMemoryContentItem {
+    margin-bottom: 16px !important;
+}
+
+.settingsMemoryHeader {
+    display: block !important;
+    font-size: 0.95em !important;
+    font-weight: 500 !important;
+    color: #fff !important;
+    margin-bottom: 8px !important;
+}
+
+.settingsMemoryActionContainer {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+}
+
+.rangeSlider {
+    flex: 1 !important;
+    position: relative !important;
+    height: 6px !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 3px !important;
+    cursor: pointer !important;
+    overflow: visible !important;
+}
+
+.rangeSliderTrack {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    height: 100% !important;
+    background: linear-gradient(90deg, #0090ff, #00d4ff) !important;
+    border-radius: 3px !important;
+}
+
+.rangeSliderBar {
+    position: absolute !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: 16px !important;
+    height: 16px !important;
+    background: #0090ff !important;
+    border-radius: 50% !important;
+    border: 2px solid #fff !important;
+    cursor: grab !important;
+    box-shadow: 0 0 12px rgba(0, 144, 255, 0.5) !important;
+    transition: box-shadow 0.2s ease !important;
+}
+
+.rangeSliderBar:hover {
+    box-shadow: 0 0 16px rgba(0, 144, 255, 0.7) !important;
+}
+
+.settingsMemoryLabel {
+    min-width: 40px !important;
+    text-align: right !important;
+    color: #0090ff !important;
+    font-weight: 600 !important;
+}
+
+#settingsMemoryDesc {
+    font-size: 0.85em !important;
+    color: rgba(255, 255, 255, 0.5) !important;
+    margin-top: 8px !important;
+}
+
+.settingsMemoryStatus {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+    padding: 16px !important;
+    background: rgba(0, 0, 0, 0.2) !important;
+    border-radius: 8px !important;
+    border: 1px solid rgba(0, 144, 255, 0.2) !important;
+}
+
+.settingsMemoryStatusContainer {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+}
+
+.settingsMemoryStatusTitle {
+    font-size: 0.9em !important;
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.settingsMemoryStatusValue {
+    font-size: 1.3em !important;
+    font-weight: 600 !important;
+    color: #0090ff !important;
+    text-shadow: 0 0 8px rgba(0, 144, 255, 0.3) !important;
+}
+
+/* ===== MODS SETTINGS ===== */
+.settingsSelServContainer {
+    margin: 24px 0 !important;
+}
+
+.settingsSelServContent {
+    padding: 12px 16px !important;
+    background: rgba(0, 0, 0, 0.2) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 6px !important;
+    margin-bottom: 12px !important;
+}
+
+.settingsSwitchServerContainer {
+    display: flex !important;
+    justify-content: center !important;
+}
+
+.settingsSwitchServerButton {
+    padding: 8px 16px !important;
+    background: rgba(0, 144, 255, 0.2) !important;
+    border: 1px solid rgba(0, 144, 255, 0.4) !important;
+    border-radius: 4px !important;
+    color: #0090ff !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    font-weight: 500 !important;
+}
+
+.settingsSwitchServerButton:hover {
+    background: rgba(0, 144, 255, 0.3) !important;
+    border-color: #0090ff !important;
+    box-shadow: 0 0 8px rgba(0, 144, 255, 0.3) !important;
+}
+
+#settingsModsContainer {
+    margin: 24px 0 !important;
+}
+
+.settingsModsHeader {
+    font-size: 1.05em !important;
+    font-weight: 600 !important;
+    color: #0090ff !important;
+    margin: 16px 0 12px 0 !important;
+    padding-bottom: 8px !important;
+    border-bottom: 1px solid rgba(0, 144, 255, 0.2) !important;
+}
+
+#settingsOptModsContent,
+#settingsReqModsContent,
+#settingsDropinModsContent {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    margin-bottom: 16px !important;
+}
+
+#settingsDropinFileSystemButton {
+    padding: 10px 16px !important;
+    background: rgba(0, 144, 255, 0.15) !important;
+    border: 1px solid rgba(0, 144, 255, 0.3) !important;
+    border-radius: 4px !important;
+    color: #0090ff !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    font-weight: 500 !important;
+    margin: 8px 0 !important;
+}
+
+#settingsDropinFileSystemButton:hover {
+    background: rgba(0, 144, 255, 0.25) !important;
+    border-color: #0090ff !important;
+    box-shadow: 0 0 8px rgba(0, 144, 255, 0.3) !important;
+}
+
+#settingsDropinRefreshNote {
+    font-size: 0.8em !important;
+    color: rgba(0, 144, 255, 0.6) !important;
+    display: block !important;
+    margin-top: 2px !important;
+}
+
+/* ===== SHADERPACK SETTINGS ===== */
+#settingsShadersContainer {
+    margin: 24px 0 !important;
+    padding: 16px !important;
+    background: rgba(0, 144, 255, 0.05) !important;
+    border: 1px solid rgba(0, 144, 255, 0.2) !important;
+    border-radius: 8px !important;
+}
+
+#settingsShaderpackDesc {
+    font-size: 0.9em !important;
+    color: rgba(255, 255, 255, 0.6) !important;
+    margin-bottom: 12px !important;
+}
+
+#settingsShaderpackWrapper {
+    display: flex !important;
+    gap: 12px !important;
+    align-items: center !important;
+}
+
+#settingsShaderpackButton {
+    padding: 8px 12px !important;
+    background: rgba(0, 144, 255, 0.2) !important;
+    border: 1px solid rgba(0, 144, 255, 0.4) !important;
+    border-radius: 4px !important;
+    color: #0090ff !important;
+    cursor: pointer !important;
+    font-weight: 600 !important;
+    transition: all 0.2s ease !important;
+}
+
+#settingsShaderpackButton:hover {
+    background: rgba(0, 144, 255, 0.3) !important;
+    border-color: #0090ff !important;
+}
+
+.settingsSelectContainer {
+    flex: 1 !important;
+    position: relative !important;
+}
+
+.settingsSelectSelected {
+    padding: 8px 12px !important;
+    background: rgba(0, 0, 0, 0.3) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 4px !important;
+    color: rgba(255, 255, 255, 0.7) !important;
+    cursor: pointer !important;
+}
+
+.settingsSelectOptions {
+    position: absolute !important;
+    top: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
+    background: rgba(0, 0, 0, 0.6) !important;
+    border: 1px solid rgba(0, 144, 255, 0.3) !important;
+    border-radius: 4px !important;
+    margin-top: 4px !important;
+    z-index: 1000 !important;
+    max-height: 200px !important;
+    overflow-y: auto !important;
+}
+
+/* ===== JVM OPTIONS ===== */
+#settingsJVMOptsContainer {
+    margin: 24px 0 !important;
+    padding: 16px !important;
+    background: rgba(0, 144, 255, 0.05) !important;
+    border: 1px solid rgba(0, 144, 255, 0.2) !important;
+    border-radius: 8px !important;
+}
+
+#settingsJVMOptsTitle {
+    font-size: 1.05em !important;
+    font-weight: 600 !important;
+    color: #fff !important;
+    margin-bottom: 12px !important;
+}
+
+#settingsJVMOptsContent {
+    display: flex !important;
+    gap: 12px !important;
+    margin-bottom: 12px !important;
+}
+
+#settingsJVMOptsVal {
+    flex: 1 !important;
+    padding: 8px 12px !important;
+    background: rgba(0, 0, 0, 0.3) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 4px !important;
+    color: #fff !important;
+    font-size: 0.9em !important;
+    font-family: 'Courier New', monospace !important;
+}
+
+#settingsJVMOptsDesc {
+    font-size: 0.85em !important;
+    color: rgba(255, 255, 255, 0.5) !important;
+    line-height: 1.5 !important;
+}
+
+#settingsJVMOptsDesc a {
+    color: #0090ff !important;
+    text-decoration: none !important;
+}
+
+#settingsJVMOptsDesc a:hover {
+    text-decoration: underline !important;
+}
+
+/* ===== ACCOUNT SETTINGS ===== */
+.settingsAuthAccountTypeContainer {
+    margin: 24px 0 !important;
+    padding: 16px !important;
+    background: rgba(0, 0, 0, 0.2) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 8px !important;
+}
+
+.settingsAuthAccountTypeHeader {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-bottom: 16px !important;
+    padding-bottom: 12px !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.settingsAuthAccountTypeHeaderLeft {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+}
+
+.settingsAuthAccountTypeHeaderLeft svg {
+    width: 24px !important;
+    height: 24px !important;
+}
+
+.settingsAuthAccountTypeHeaderLeft span {
+    font-weight: 600 !important;
+    color: #fff !important;
+}
+
+.settingsAddAuthAccount {
+    padding: 6px 12px !important;
+    background: rgba(0, 144, 255, 0.2) !important;
+    border: 1px solid rgba(0, 144, 255, 0.4) !important;
+    border-radius: 4px !important;
+    color: #0090ff !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    font-size: 0.9em !important;
+    font-weight: 500 !important;
+}
+
+.settingsAddAuthAccount:hover {
+    background: rgba(0, 144, 255, 0.3) !important;
+    border-color: #0090ff !important;
+    box-shadow: 0 0 8px rgba(0, 144, 255, 0.3) !important;
+}
+
+.settingsCurrentAccounts {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+}
+
+/* ===== DATA DIRECTORY ===== */
+#settingsDataDirTitle {
+    font-size: 1.05em !important;
+    font-weight: 600 !important;
+    color: #fff !important;
+    margin-bottom: 12px !important;
+}
+
+/* ===== ABOUT AND UPDATE TABS ===== */
+#settingsTabAbout,
+#settingsTabUpdate {
+    padding-top: 12px !important;
+}
+
+#settingsAboutCurrentContainer,
+#settingsUpdateStatusContainer {
+    padding: 24px !important;
+    background: rgba(0, 144, 255, 0.05) !important;
+    border: 1px solid rgba(0, 144, 255, 0.2) !important;
+    border-radius: 8px !important;
+    margin-bottom: 24px !important;
+}
+
+#settingsAboutCurrentHeadline,
+#settingsUpdateStatusHeadline {
+    display: flex !important;
+    align-items: center !important;
+    gap: 16px !important;
+    margin-bottom: 20px !important;
+}
+
+#settingsAboutLogo {
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 8px !important;
+}
+
+#settingsAboutTitle {
+    font-size: 1.3em !important;
+    font-weight: 600 !important;
+    color: #fff !important;
+}
+
+#settingsUpdateTitle {
+    font-size: 1.1em !important;
+    color: #0090ff !important;
+    font-weight: 600 !important;
+}
+
+#settingsAboutCurrentVersion,
+#settingsUpdateVersion {
+    display: flex !important;
+    align-items: center !important;
+    gap: 16px !important;
+    padding: 16px !important;
+    background: rgba(0, 0, 0, 0.2) !important;
+    border-radius: 6px !important;
+    margin-bottom: 16px !important;
+}
+
+#settingsAboutCurrentVersionCheck,
+#settingsUpdateVersionCheck {
+    font-size: 1.5em !important;
+    color: #0090ff !important;
+}
+
+#settingsAboutCurrentVersionDetails,
+#settingsUpdateVersionDetails {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+}
+
+#settingsAboutCurrentVersionTitle,
+#settingsUpdateVersionTitle {
+    font-size: 0.85em !important;
+    color: rgba(255, 255, 255, 0.6) !important;
+    text-transform: uppercase !important;
+}
+
+#settingsAboutCurrentVersionLine,
+#settingsUpdateVersionLine {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+#settingsAboutCurrentVersionText,
+#settingsUpdateVersionText {
+    font-size: 0.95em !important;
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+#settingsAboutCurrentVersionValue,
+#settingsUpdateVersionValue {
+    font-size: 1.2em !important;
+    font-weight: 600 !important;
+    color: #0090ff !important;
+}
+
+#settingsAboutButtons,
+#settingsUpdateActionContainer {
+    display: flex !important;
+    gap: 12px !important;
+    flex-wrap: wrap !important;
+}
+
+.settingsAboutButton,
+#settingsUpdateActionButton {
+    padding: 10px 20px !important;
+    background: rgba(0, 144, 255, 0.15) !important;
+    border: 1px solid rgba(0, 144, 255, 0.3) !important;
+    border-radius: 6px !important;
+    color: #0090ff !important;
+    cursor: pointer !important;
+    text-decoration: none !important;
+    transition: all 0.2s ease !important;
+    font-weight: 500 !important;
+}
+
+.settingsAboutButton:hover,
+#settingsUpdateActionButton:hover {
+    background: rgba(0, 144, 255, 0.25) !important;
+    border-color: #0090ff !important;
+    box-shadow: 0 0 12px rgba(0, 144, 255, 0.4) !important;
+}
+
+.settingsChangelogContainer {
+    padding: 24px !important;
+    background: rgba(0, 0, 0, 0.2) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 8px !important;
+}
+
+.settingsChangelogHeadline {
+    margin-bottom: 16px !important;
+}
+
+.settingsChangelogLabel {
+    font-size: 0.85em !important;
+    color: rgba(255, 255, 255, 0.5) !important;
+    text-transform: uppercase !important;
+    margin-bottom: 4px !important;
+    display: block !important;
+}
+
+.settingsChangelogTitle {
+    font-size: 1.2em !important;
+    font-weight: 600 !important;
+    color: #fff !important;
+}
+
+.settingsChangelogText {
+    font-size: 0.95em !important;
+    color: rgba(255, 255, 255, 0.7) !important;
+    line-height: 1.6 !important;
+    margin-bottom: 16px !important;
+}
+
+.settingsChangelogButton {
+    display: inline-block !important;
+}
+
+/* ===== SCROLLBAR STYLING ===== */
+#settingsContainerRight::-webkit-scrollbar,
+#settingsNavItemsContainer::-webkit-scrollbar {
+    width: 8px !important;
+}
+
+#settingsContainerRight::-webkit-scrollbar-track,
+#settingsNavItemsContainer::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1) !important;
+}
+
+#settingsContainerRight::-webkit-scrollbar-thumb,
+#settingsNavItemsContainer::-webkit-scrollbar-thumb {
+    background: rgba(0, 144, 255, 0.3) !important;
+    border-radius: 4px !important;
+}
+
+#settingsContainerRight::-webkit-scrollbar-thumb:hover,
+#settingsNavItemsContainer::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 144, 255, 0.5) !important;
+}
+
+/* ===== INPUT FIELDS GENERAL ===== */
+input[type="text"],
+input[type="number"],
+input[type="password"],
+select,
+textarea {
+    background-color: rgba(0, 0, 0, 0.3) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    color: #fff !important;
+    border-radius: 4px !important;
+    padding: 8px 12px !important;
+    transition: all 0.2s ease !important;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="password"]:focus,
+select:focus,
+textarea:focus {
+    border-color: #0090ff !important;
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    box-shadow: 0 0 8px rgba(0, 144, 255, 0.3) !important;
+}
+
+input[type="text"]::placeholder,
+input[type="number"]::placeholder,
+input[type="password"]::placeholder,
+textarea::placeholder {
+    color: rgba(255, 255, 255, 0.4) !important;
+}
+
+/* ===== RESPONSIVE ADJUSTMENTS ===== */
+@media (max-width: 768px) {
+    #settingsMemoryContent {
+        flex-direction: column !important;
+    }
+
+    #settingsMemoryContentRight {
+        min-width: auto !important;
+    }
+
+    .settingsAuthAccountTypeHeader {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 12px !important;
+    }
+
+    .settingsAuthAccountTypeHeaderRight {
+        width: 100% !important;
+    }
+
+    .settingsAddAuthAccount {
+        width: 100% !important;
+    }
+}

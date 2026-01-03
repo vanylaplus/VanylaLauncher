@@ -1,0 +1,18 @@
+# Custom Language File for Launcher Customizer
+
+[ejs.app]
+title = "VanylaPlus Launcher"
+
+[ejs.landing]
+
+mediaDiscordURL = "https://discord.gg/NQGF2FBCWu"
+
+[ejs.settings]
+sourceGithubLink = "https://vanyla.fr"
+supportLink = "https://discord.com/invite/NQGF2FBCWu"
+
+[ejs.welcome]
+welcomeHeader = "BIENVENUE SUR VANYLA PLUS"
+welcomeDescription = "Notre objectif est de vous proposé une aventure vanilla côté gameplay avec des nouveautées d'explorations, de nouveaux ennemis robuste et qui sait ? Une nouvelle dimension ! "
+welcomeDescCTA = "Tu n’es plus qu’à quelques clics de VanylaPlus"
+

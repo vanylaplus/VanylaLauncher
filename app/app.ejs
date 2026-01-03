@@ -74,18 +74,15 @@
             height: 100% !important;
             background: linear-gradient(90deg, #fff 0%, rgba(255,255,255,0.8) 100%) !important;
             border-radius: 2px !important;
-            animation: progressAnimation 2s ease-in-out infinite !important;
+            animation: progressAnimation 2s ease-in-out forwards !important;
         }
 
         @keyframes progressAnimation {
             0% {
                 width: 0%;
             }
-            50% {
-                width: 100%;
-            }
             100% {
-                width: 0%;
+                width: 100%;
             }
         }
     </style>

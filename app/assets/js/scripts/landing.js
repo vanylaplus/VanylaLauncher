@@ -250,6 +250,60 @@ if(helpSidebarNewsBtn) {
     }
 }
 
+// Bind Wheel button in sidebar (all pages)
+const sidebarWheel = document.getElementById('sidebarWheel')
+if(sidebarWheel) {
+    sidebarWheel.onclick = e => {
+        switchView(getCurrentView(), VIEWS.wheel)
+    }
+}
+
+const helpSidebarWheel = document.getElementById('helpSidebarWheel')
+if(helpSidebarWheel) {
+    helpSidebarWheel.onclick = e => {
+        switchView(getCurrentView(), VIEWS.wheel)
+    }
+}
+
+const cguSidebarWheel = document.getElementById('cguSidebarWheel')
+if(cguSidebarWheel) {
+    cguSidebarWheel.onclick = e => {
+        switchView(getCurrentView(), VIEWS.wheel)
+    }
+}
+
+const wheelSidebarSettings = document.getElementById('wheelSidebarSettings')
+if(wheelSidebarSettings) {
+    wheelSidebarSettings.onclick = async e => {
+        await prepareSettings()
+        switchView(getCurrentView(), VIEWS.settings)
+    }
+}
+
+// Bind Wheel sidebar home button
+const wheelSidebarHomeBtn = document.getElementById('wheelSidebarHome')
+if(wheelSidebarHomeBtn) {
+    wheelSidebarHomeBtn.onclick = e => {
+        switchView(getCurrentView(), VIEWS.landing)
+    }
+}
+
+// Bind Wheel sidebar help button
+const wheelSidebarHelpBtn = document.getElementById('wheelSidebarHelp')
+if(wheelSidebarHelpBtn) {
+    wheelSidebarHelpBtn.onclick = e => {
+        switchView(getCurrentView(), VIEWS.help)
+    }
+}
+
+// Bind Wheel sidebar CGU button
+const wheelSidebarCGUBtn = document.getElementById('wheelSidebarCGU')
+if(wheelSidebarCGUBtn) {
+    wheelSidebarCGUBtn.onclick = e => {
+        switchView(getCurrentView(), VIEWS.cgu)
+    }
+}
+
 // Bind Help sidebar settings button
 const helpSidebarSettingsBtn = document.getElementById('helpSidebarSettings')
 if(helpSidebarSettingsBtn) {
@@ -303,45 +357,66 @@ if(_avatarOverlay){
 // Bind selected account
 function updateSelectedAccount(authUser){
     let username = Lang.queryJS('landing.selectedAccount.noAccountSelected')
+    let lastLoginText = ''
     if(authUser != null){
         if(authUser.displayName != null){
             username = authUser.displayName
         }
+        // Get or initialize lastLogin
+        let lastLoginTime = authUser.lastLogin || new Date().getTime()
+        const now = new Date().getTime()
+        const diff = now - lastLoginTime
+        const seconds = Math.floor(diff / 1000)
+        const minutes = Math.floor(seconds / 60)
+        const hours = Math.floor(minutes / 60)
+        const days = Math.floor(hours / 24)
+        
+        if (seconds < 60) lastLoginText = 'À l\'instant'
+        else if (minutes < 60) lastLoginText = `Il y a ${minutes}m`
+        else if (hours < 24) lastLoginText = `Il y a ${hours}h`
+        else if (days < 7) lastLoginText = `Il y a ${days}j`
+        else {
+            const date = new Date(lastLoginTime)
+            lastLoginText = date.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: '2-digit' })
+        }
+        
         if(authUser.uuid != null){
-            // Update landing avatar
-            const landingAvatar = document.getElementById('avatarContainer')
-            if(landingAvatar) {
-                landingAvatar.style.backgroundImage = `url('https://mc-heads.net/body/${authUser.uuid}/right')`
-            }
-            // Update CGU avatar
-            const cguAvatar = document.getElementById('cgu_avatarContainer')
-            if(cguAvatar) {
-                cguAvatar.style.backgroundImage = `url('https://mc-heads.net/body/${authUser.uuid}/right')`
-            }
-            // Update help avatar
-            const helpAvatar = document.getElementById('help_avatarContainer')
-            if(helpAvatar) {
-                helpAvatar.style.backgroundImage = `url('https://mc-heads.net/body/${authUser.uuid}/right')`
-            }
+            // Update ALL avatars using class selector
+            const avatars = document.querySelectorAll('.profile-avatar')
+            avatars.forEach(avatar => {
+                avatar.style.backgroundImage = `url('https://mc-heads.net/body/${authUser.uuid}/right')`
+            })
         }
     }
-    // Update landing username
-    const landingUserText = document.getElementById('user_text')
-    if(landingUserText) {
-        landingUserText.innerHTML = username
-    }
-    // Update CGU username
-    const cguUserText = document.getElementById('cgu_user_text')
-    if(cguUserText) {
-        cguUserText.innerHTML = username
-    }
-    // Update help username
-    const helpUserText = document.getElementById('help_user_text')
-    if(helpUserText) {
-        helpUserText.innerHTML = username
+    // Update ALL usernames using class selector
+    const userNames = document.querySelectorAll('.profile-name')
+    userNames.forEach(elem => {
+        elem.innerHTML = username
+    })
+    
+    // Update ALL token balances using TokenManager
+    if(authUser.uuid != null && typeof TokenManager_Instance !== 'undefined') {
+        const balance = TokenManager_Instance.getBalance(authUser.uuid)
+        const balanceElements = document.querySelectorAll('.tokens-balance')
+        balanceElements.forEach(elem => {
+            elem.textContent = balance.toString()
+        })
     }
 }
 updateSelectedAccount(ConfigManager.getSelectedAccount())
+
+// Listen to token balance updates
+if(typeof TokenManager_Instance !== 'undefined') {
+    TokenManager_Instance.onUpdate(({uuid, balance}) => {
+        const authUser = ConfigManager.getSelectedAccount()
+        if(authUser && authUser.uuid === uuid) {
+            const balanceElements = document.querySelectorAll('.tokens-balance')
+            balanceElements.forEach(elem => {
+                elem.textContent = balance.toString()
+            })
+        }
+    })
+}
 
 // Bind selected server
 function updateSelectedServer(serv){
@@ -868,7 +943,7 @@ function slide_(up){
         newsContainer.style.top = '0px'
         //date.toLocaleDateString('en-US', {month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric'})
         //landingContainer.style.background = 'rgba(29, 29, 29, 0.55)'
-        landingContainer.style.background = 'rgba(0, 0, 0, 0.50)'
+        landingContainer.style.background = '#18191c'
         setTimeout(() => {
             if(newsGlideCount === 1){
                 lCLCenter.style.transition = 'none'
@@ -1296,11 +1371,37 @@ function wireRefreshButtonHelp() {
     })
 }
 
+// Wire refresh button for Wheel page
+function wireRefreshButtonWheel() {
+    const btn = document.getElementById('refreshMediaButtonWheel')
+    if(!btn) return
+    
+    // Remove all existing click listeners by cloning
+    const newBtn = btn.cloneNode(true)
+    btn.parentNode.replaceChild(newBtn, btn)
+    
+    const hardReload = () => {
+        try {
+            if (window.location && typeof window.location.reload === 'function') {
+                window.location.reload()
+                return
+            }
+        } catch (_) {}
+        try { window.location.href = window.location.href } catch (_) {}
+    }
+    
+    newBtn.addEventListener('click', (e) => {
+        e.preventDefault()
+        hardReload()
+    })
+}
+
 // Wire both buttons on initial load
 document.addEventListener('DOMContentLoaded', () => {
     wireRefreshButtonLanding()
     wireRefreshButtonCGU()
     wireRefreshButtonHelp()
+    wireRefreshButtonWheel()
 })
 
 // Also wire immediately in case DOM is already loaded
@@ -1308,18 +1409,27 @@ if (document.readyState !== 'loading') {
     wireRefreshButtonLanding()
     wireRefreshButtonCGU()
     wireRefreshButtonHelp()
+    wireRefreshButtonWheel()
 }
 
 // Re-wire whenever pages become visible
 const observer = new MutationObserver(() => {
     const landingContainer = document.getElementById('landingContainer')
     const cguContainer = document.getElementById('cguContainer')
+    const helpContainer = document.getElementById('helpContainer')
+    const wheelContainer = document.getElementById('wheelContainer')
     
     if (landingContainer && landingContainer.style.display !== 'none') {
         wireRefreshButtonLanding()
     }
     if (cguContainer && cguContainer.style.display !== 'none') {
         wireRefreshButtonCGU()
+    }
+    if (helpContainer && helpContainer.style.display !== 'none') {
+        wireRefreshButtonHelp()
+    }
+    if (wheelContainer && wheelContainer.style.display !== 'none') {
+        wireRefreshButtonWheel()
     }
 })
 

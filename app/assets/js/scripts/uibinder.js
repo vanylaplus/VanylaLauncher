@@ -3,12 +3,13 @@
  * Loaded after core UI functions are initialized in uicore.js.
  */
 // Requirements
-const path          = require('path')
-const { Type }      = require('helios-distribution-types')
+const path            = require('path')
+const { Type }        = require('helios-distribution-types')
 
-const AuthManager   = require('./assets/js/authmanager')
-const ConfigManager = require('./assets/js/configmanager')
-const { DistroAPI } = require('./assets/js/distromanager')
+const AuthManager     = require('./assets/js/authmanager')
+const ConfigManager   = require('./assets/js/configmanager')
+const { DistroAPI }   = require('./assets/js/distromanager')
+const assetPreloader  = require('./assets/js/assetpreloader')
 
 let rscShouldLoad = false
 let fatalStartupError = false
@@ -22,32 +23,75 @@ const VIEWS = {
     cgu: '#cguContainer',
     help: '#helpContainer',
     welcome: '#welcomeContainer',
-    waiting: '#waitingContainer'
+    waiting: '#waitingContainer',
+    wheel: '#wheelContainer'
 }
 
 // The currently shown view container.
 let currentView
 
 /**
- * Switch launcher views.
+ * Switch launcher views with PARALLEL animations for iPhone 17-level smoothness.
+ * Exit and Enter animations happen simultaneously for ultra-fast transitions (250ms total).
  * 
  * @param {string} current The ID of the current view container. 
  * @param {*} next The ID of the next view container.
- * @param {*} currentFadeTime Optional. The fade out time for the current view.
- * @param {*} nextFadeTime Optional. The fade in time for the next view.
- * @param {*} onCurrentFade Optional. Callback function to execute when the current
- * view fades out.
- * @param {*} onNextFade Optional. Callback function to execute when the next view
- * fades in.
+ * @param {*} transitionTime Optional. Duration of transition animation (default: 250ms for ultra-fast).
+ * @param {*} onCurrentFade Optional. Callback function when current view starts fading.
+ * @param {*} onNextFade Optional. Callback function when next view starts appearing.
  */
-function switchView(current, next, currentFadeTime = 500, nextFadeTime = 500, onCurrentFade = () => {}, onNextFade = () => {}){
+function switchView(current, next, transitionTime = 250, onCurrentFade = () => {}, onNextFade = () => {}){
     currentView = next
-    $(`${current}`).fadeOut(currentFadeTime, async () => {
-        await onCurrentFade()
-        $(`${next}`).fadeIn(nextFadeTime, async () => {
-            await onNextFade()
-        })
-    })
+    // Save the current view to localStorage for restoration
+    localStorage.setItem('lastView', next)
+
+    // Extract view name from container ID and preload its assets
+    const viewName = Object.keys(VIEWS).find(key => VIEWS[key] === next)
+    if (viewName) {
+        assetPreloader.preloadViewAssets(viewName)
+            .catch(e => console.debug('[switchView] Asset preload error:', e))
+    }
+    
+    const $current = $(`${current}`)
+    const $next = $(`${next}`)
+    
+    // ========================================================================
+    // PHASE 1: LOCK UI & START PARALLEL ANIMATIONS (TIME: 0ms)
+    // ========================================================================
+    
+    // Lock UI - prevent all pointer events and scrolling
+    document.body.classList.add('transition-mode')
+    
+    // Show the next view IMMEDIATELY (not after delay)
+    $next.show()
+    
+    // START BOTH ANIMATIONS IN PARALLEL:
+    // - Current view: fade out + scale down (exiting)
+    // - Next view: fade in + scale up (entering)
+    $current.addClass('exiting')
+    $next.addClass('entering')
+    
+    // Execute callbacks when animations start
+    onCurrentFade()
+    onNextFade()
+    
+    // ========================================================================
+    // PHASE 2: CLEANUP AFTER ANIMATIONS COMPLETE (TIME: 250ms)
+    // ========================================================================
+    
+    setTimeout(async () => {
+        // Remove animation classes
+        $current.removeClass('exiting')
+        $next.removeClass('entering')
+        
+        // Hide the current view
+        $current.hide()
+        
+        // Unlock UI - allow pointer events and scrolling again
+        document.body.classList.remove('transition-mode')
+        
+        // Transition is now COMPLETE - feel is instantaneous!
+    }, transitionTime)
 }
 
 /**
@@ -81,8 +125,14 @@ async function showMainUI(data){
     refreshServerStatus()
     setTimeout(() => {
         document.getElementById('frameBar').style.backgroundColor = 'transparent'
-        document.body.style.backgroundImage = `url('assets/images/backgrounds/0.jpg')`
+        // Use landing grid background instead of image - no background image
+        document.body.style.backgroundImage = 'none'
+        document.body.style.background = '#18191c'
         $('#main').show()
+
+        // Start preloading assets for smooth navigation
+        assetPreloader.preloadCriticalAssets()
+            .catch(e => console.debug('[showMainUI] Critical assets preload error:', e))
 
         const isLoggedIn = Object.keys(ConfigManager.getAuthAccounts()).length > 0
 
@@ -92,25 +142,42 @@ async function showMainUI(data){
             validateSelectedAccount()
         }
 
+        // Récupérer la dernière vue sauvegardée
+        const lastView = localStorage.getItem('lastView')
+        let viewToShow = VIEWS.landing
+
         if(ConfigManager.isFirstLaunch()){
             currentView = VIEWS.welcome
-            $(VIEWS.welcome).fadeIn(1000)
+            viewToShow = VIEWS.welcome
         } else {
             if(isLoggedIn){
-                currentView = VIEWS.landing
-                $(VIEWS.landing).fadeIn(1000)
+                // Si une dernière vue existe et que l'utilisateur est connecté, la restaurer
+                if(lastView && Object.values(VIEWS).includes(lastView)){
+                    currentView = lastView
+                    viewToShow = lastView
+                } else {
+                    currentView = VIEWS.landing
+                    viewToShow = VIEWS.landing
+                }
             } else {
                 loginOptionsCancelEnabled(false)
                 loginOptionsViewOnLoginSuccess = VIEWS.landing
                 loginOptionsViewOnLoginCancel = VIEWS.loginOptions
                 currentView = VIEWS.loginOptions
-                $(VIEWS.loginOptions).fadeIn(1000)
+                viewToShow = VIEWS.loginOptions
             }
         }
+
+        $(viewToShow).fadeIn(1000)
+        
+        // Masquer le background pendant la transition du loading
+        document.body.classList.add('transition-mode')
 
         setTimeout(() => {
             $('#loadingContainer').fadeOut(500, () => {
                 $('#loadSpinnerImage').removeClass('rotating')
+                // Restaurer le background une fois le loading disparu
+                document.body.classList.remove('transition-mode')
             })
         }, 250)
         

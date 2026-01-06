@@ -51,7 +51,7 @@ html, body {
   position: relative;
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-darker) 100%) !important;
+  background: #18191c !important;
   color: var(--text-primary);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   overflow: hidden !important;
@@ -77,6 +77,29 @@ html, body {
   box-sizing: border-box !important;
 }
 
+/* Apply same styles to other page containers */
+#wheelContainer,
+#helpContainer,
+#cguContainer {
+  display: none; /* Hidden until activated by JS */
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background: #18191c !important;
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  overflow: hidden !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+  left: 0 !important;
+  display: grid !important;
+  grid-template-columns: 80px 1fr;
+  gap: 0;
+  width: 100vw !important;
+  height: 100vh !important;
+}
+
 #settingsContainer {
   display: grid;
   grid-template-columns: 200px 1fr;
@@ -95,7 +118,7 @@ html, body {
   grid-row: 1 / -1;
   width: 84px;
   height: 100vh;
-  background: var(--bg-dark);
+  background: #18191c;
   border-right: none;
   padding: 24px 0 24px 0;
   display: flex;
@@ -399,217 +422,164 @@ html, body {
 }
 
 /* Override launcher.css for profile card */
-#user_content {
+/* User Content Box - Single class for all pages */
+.user_content {
   display: flex !important;
-  flex-direction: column !important;
+  flex-direction: row !important;
   align-items: center !important;
-  justify-content: center !important;
-  gap: 6px !important;
-  padding: 5px 16px !important;
-  background: url('https://vanylaplus.fr/images/buttonprf.jpg') center/cover no-repeat !important;
-  border-radius: 12px !important;
-  box-shadow: 0 6px 20px rgba(15,163,216,0.2) !important;
-  min-width: 280px !important;
-  height: 61px !important;
-  max-height: 61px !important;
-  min-height: 61px !important;
+  justify-content: flex-start !important;
+  gap: 10px !important;
+  padding: 6px 14px !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  max-height: 40px !important;
+  background: linear-gradient(135deg, rgba(80, 80, 80, 0.12) 0%, rgba(100, 100, 100, 0.08) 100%) !important;
+  border: 1px solid rgba(120, 120, 120, 0.25) !important;
+  border-radius: 6px !important;
+  box-shadow: 
+    inset 0 1px 2px rgba(255, 255, 255, 0.06),
+    0 4px 12px rgba(0, 0, 0, 0.2) !important;
   position: relative !important;
-  border: none !important;
-  background-color: transparent !important;
-  opacity: 1 !important;
+  overflow: hidden !important;
+  backdrop-filter: blur(6px) !important;
 }
 
-#cgu_user_content {
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 6px !important;
-  padding: 5px 16px !important;
-  background: url('https://vanylaplus.fr/images/buttonprf.jpg') center/cover no-repeat !important;
-  border-radius: 12px !important;
-  box-shadow: 0 6px 20px rgba(15,163,216,0.2) !important;
-  min-width: 280px !important;
-  height: 61px !important;
-  max-height: 61px !important;
-  min-height: 61px !important;
-  position: relative !important;
-  border: none !important;
-  background-color: transparent !important;
-  opacity: 1 !important;
-}
-
-#avatarContainer {
-  width: 32px !important;
-  height: 32px !important;
-  min-width: 32px !important;
-  max-width: 32px !important;
-  min-height: 32px !important;
-  max-height: 32px !important;
-  border-radius: 4px !important;
-  border: none !important;
-  background-size: 35% !important;
+/* Avatar Container - Compact box with small image */
+.profile-avatar {
+  width: 28px !important;
+  height: 28px !important;
+  min-width: 28px !important;
+  max-width: 28px !important;
+  min-height: 28px !important;
+  max-height: 28px !important;
+  border-radius: 3px !important;
+  border: 1px solid rgba(120, 120, 120, 0.35) !important;
+  background-size: 38% !important;
   background-position: center !important;
   background-repeat: no-repeat !important;
-  background-color: rgba(255,255,255,0.1) !important;
+  background-color: rgba(100, 100, 100, 0.15) !important;
   display: flex !important;
   flex-shrink: 0 !important;
-  order: -1 !important;
   position: static !important;
   visibility: visible !important;
   opacity: 1 !important;
-}
-
-#cgu_avatarContainer {
-  width: 32px !important;
-  height: 32px !important;
-  min-width: 32px !important;
-  max-width: 32px !important;
-  min-height: 32px !important;
-  max-height: 32px !important;
-  border-radius: 4px !important;
-  border: none !important;
-  background-size: 35% !important;
-  background-position: center !important;
-  background-repeat: no-repeat !important;
-  background-color: rgba(255,255,255,0.1) !important;
-  display: flex !important;
-  flex-shrink: 0 !important;
-  order: -1 !important;
-  position: static !important;
-  visibility: visible !important;
-  opacity: 1 !important;
+  box-shadow: none !important;
 }
 
 .profile-card {
   display: flex !important;
-  flex-direction: column !important;
+  flex-direction: row !important;
   align-items: center !important;
-  justify-content: center !important;
-  gap: 4px !important;
-  padding: 6px 12px !important;
-  background: url('https://vanylaplus.fr/images/buttonprf.jpg') center/cover no-repeat !important;
-  border-radius: 10px !important;
-  box-shadow: 0 6px 20px rgba(15,163,216,0.2) !important;
-  min-width: 220px !important;
-  pointer-events: none !important;
-  height: 61px !important;
-  max-height: 61px !important;
-  min-height: 61px !important;
+  justify-content: flex-start !important;
+  gap: 10px !important;
+  padding: 6px 14px !important;
+  background: linear-gradient(135deg, rgba(80, 80, 80, 0.12) 0%, rgba(100, 100, 100, 0.08) 100%) !important;
+  border: 1px solid rgba(120, 120, 120, 0.25) !important;
+  border-radius: 6px !important;
+  box-shadow: 
+    inset 0 1px 2px rgba(255, 255, 255, 0.06),
+    0 4px 12px rgba(0, 0, 0, 0.2) !important;
+  height: 40px !important;
+  max-height: 40px !important;
+  min-height: 40px !important;
   position: relative !important;
-  overflow: visible !important;
+  overflow: hidden !important;
+  backdrop-filter: blur(6px) !important;
+  pointer-events: auto !important;
 }
 
 .profile-text {
   display: flex !important;
-  flex-direction: row !important;
-  gap: 4px !important;
-  justify-content: space-between !important;
-  align-items: center !important;
-  text-align: center !important;
+  flex-direction: column !important;
+  gap: 0px !important;
+  justify-content: center !important;
+  align-items: flex-start !important;
+  text-align: left !important;
   flex: 1 !important;
-  filter: drop-shadow(0 0 4px rgba(0, 200, 255, 0.8)) drop-shadow(0 0 8px rgba(0, 200, 255, 0.6)) drop-shadow(0 0 12px rgba(0, 180, 255, 0.4)) !important;
-  overflow: visible !important;
+  overflow: hidden !important;
+  min-width: 0 !important;
+  line-height: 1.1 !important;
 }
 
 .profile-label {
-  font-size: 0.70em !important;
-  color: #fff !important;
+  font-size: 0.55em !important;
+  color: rgba(200, 200, 200, 0.9) !important;
   line-height: 1 !important;
   letter-spacing: 0.3px !important;
   font-weight: 700 !important;
   position: static !important;
   min-width: auto !important;
   text-align: left !important;
-  text-shadow: 0 0 6px rgba(0, 200, 255, 0.9), 0 0 12px rgba(0, 180, 255, 0.7), 0 0 18px rgba(0, 150, 255, 0.4) !important;
-}
-
-#user_text {
-  font-size: 0.80em !important;
-  font-weight: 700 !important;
-  color: #fff !important;
-  text-shadow: 0 0 6px rgba(0, 200, 255, 0.9), 0 0 12px rgba(0, 180, 255, 0.7), 0 0 18px rgba(0, 150, 255, 0.4) !important;
-  position: static !important;
-  right: auto !important;
-  text-align: right !important;
-  min-width: auto !important;
-  line-height: 1 !important;
-  letter-spacing: 0.3px !important;
-}
-
-#cgu_user_text {
-  font-size: 0.80em !important;
-  font-weight: 700 !important;
-  color: #fff !important;
-  text-shadow: 0 0 6px rgba(0, 200, 255, 0.9), 0 0 12px rgba(0, 180, 255, 0.7), 0 0 18px rgba(0, 150, 255, 0.4) !important;
-  position: static !important;
-  right: auto !important;
-  text-align: right !important;
-  min-width: auto !important;
-  line-height: 1 !important;
-  letter-spacing: 0.3px !important;
-}
-
-#help_user_content {
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 6px !important;
-  padding: 5px 16px !important;
-  background: url('https://vanylaplus.fr/images/buttonprf.jpg') center/cover no-repeat !important;
-  border-radius: 12px !important;
-  box-shadow: 0 6px 20px rgba(15,163,216,0.2) !important;
-  min-width: 280px !important;
-  height: 61px !important;
-  max-height: 61px !important;
-  min-height: 61px !important;
-  position: relative !important;
-  border: none !important;
-  background-color: transparent !important;
-  opacity: 1 !important;
-}
-
-#help_avatarContainer {
-  width: 32px !important;
-  height: 32px !important;
-  min-width: 32px !important;
-  max-width: 32px !important;
-  min-height: 32px !important;
-  max-height: 32px !important;
-  border-radius: 4px !important;
-  border: none !important;
-  background-size: 35% !important;
-  background-position: center !important;
-  background-repeat: no-repeat !important;
-  background-color: rgba(255,255,255,0.1) !important;
-  display: flex !important;
-  flex-shrink: 0 !important;
-  order: -1 !important;
-  position: static !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-}
-
-#help_user_text {
-  font-size: 0.80em !important;
-  font-weight: 700 !important;
-  color: #fff !important;
-  text-shadow: 0 0 6px rgba(0, 200, 255, 0.9), 0 0 12px rgba(0, 180, 255, 0.7), 0 0 18px rgba(0, 150, 255, 0.4) !important;
-  position: static !important;
-  right: auto !important;
-  text-align: right !important;
-  min-width: auto !important;
-  line-height: 1 !important;
-  letter-spacing: 0.3px !important;
+  text-transform: uppercase !important;
+  opacity: 0.8 !important;
 }
 
 .profile-name {
   font-weight: 700 !important;
-  font-size: 0.70em !important;
+  font-size: 0.75em !important;
   line-height: 1 !important;
-  color: #fff !important;
-  text-shadow: 0 0 6px rgba(0, 200, 255, 0.9), 0 0 12px rgba(0, 180, 255, 0.7), 0 0 18px rgba(0, 150, 255, 0.4) !important;
+  color: rgba(200, 200, 200, 0.9) !important;
+  text-shadow: none !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  letter-spacing: 0.2px !important;
+  filter: none !important;
+  -webkit-text-stroke: 0 !important;
+  -webkit-text-fill-color: rgba(200, 200, 200, 0.9) !important;
+  text-decoration: none !important;
+  -webkit-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+.profile-name .lastLogin {
+  display: inline !important;
+  font-size: 0.72em !important;
+  color: rgba(150, 150, 150, 0.75) !important;
+  font-weight: 500 !important;
+  margin-left: 5px !important;
+  white-space: nowrap !important;
+  opacity: 1 !important;
+  text-shadow: none !important;
+}
+
+/* Profile separator line */
+.profile-separator {
+  width: 1px !important;
+  height: 24px !important;
+  background: rgba(255, 255, 255, 0.15) !important;
+  margin: 0 8px !important;
+}
+
+/* Tokens display section */
+.profile-tokens {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  flex-shrink: 0 !important;
+  padding: 4px 10px !important;
+  background: rgba(144, 238, 144, 0.08) !important;
+  border-radius: 4px !important;
+  border: 1px solid rgba(144, 238, 144, 0.2) !important;
+}
+
+.tokens-icon {
+  width: 14px !important;
+  height: 14px !important;
+  object-fit: contain !important;
+  opacity: 0.9 !important;
+  filter: drop-shadow(0 0 2px rgba(144, 238, 144, 0.4)) !important;
+}
+
+.tokens-balance {
+  font-size: 0.75em !important;
+  font-weight: 700 !important;
+  color: #90EE90 !important;
+  line-height: 1 !important;
+  letter-spacing: 0.5px !important;
+  white-space: nowrap !important;
+  text-shadow: 0 0 8px rgba(144, 238, 144, 0.2) !important;
 }
 
 .topbar-actions {
@@ -648,13 +618,13 @@ html, body {
   overflow: hidden;
   background: linear-gradient(120deg, #1a2332 0%, #22304a 100%);
   margin: 18px 18px 10px 18px;
-  border-radius: 24px;
+  border-radius: 8px;
   border: 1.5px solid #2e3a55;
   display: flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  box-shadow: 0 8px 32px 0 rgba(0,0,0,0.25), 0 1.5px 0 0 #2e3a55, 0 0 0 1.5px #2e3a55 inset;
+  box-shadow: none;
   min-height: 340px;
   transition: box-shadow 0.2s;
 }
@@ -672,7 +642,7 @@ html, body {
   background-size: cover;
   background-position: center;
   opacity: 1;
-  filter: brightness(0.92);
+  filter: brightness(1.0) contrast(1.05);
 }
 
 .hero-content {
@@ -877,21 +847,21 @@ html, body {
 .news-card {
   position: relative;
   overflow: hidden;
-  border-radius: 18px;
+  border-radius: 8px;
   border: 1.5px solid #666666 !important;
   height: 330px !important;
   max-height: 330px !important;
   min-height: 330px !important;
   cursor: pointer;
   transition: all 220ms cubic-bezier(.4,1.2,.6,1);
-  box-shadow: 0 4px 24px rgba(100,100,100,0.15);
+  box-shadow: none;
   background: linear-gradient(120deg, #232b3e 0%, #1a2332 100%);
 }
 
 .news-card:hover {
   transform: translateY(-6px) scale(1.03);
   border-color: #0090ff;
-  box-shadow: 0 18px 56px rgba(0, 144, 255, 0.25), 0 2px 8px rgba(0,0,0,0.13);
+  box-shadow: none;
 }
 
 /* News cards inside all-news modal */
@@ -1191,13 +1161,13 @@ html, body {
 #newsModalBox {
   background: linear-gradient(135deg, #1a2332 0%, #232b3e 100%);
   border: 1.5px solid #2e3a55;
-  border-radius: 20px;
+  border-radius: 8px;
   width: 90%;
   max-width: 800px;
   max-height: 80vh;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+  box-shadow: none;
   animation: slideUp 0.4s ease-out;
   overflow: hidden;
 }
@@ -1344,20 +1314,14 @@ html, body {
   background-size: cover;
   background-position: center;
   border: 2px solid rgba(120, 120, 120, 0.4);
-  border-radius: 16px;
+  border-radius: 8px;
   padding: 32px;
   min-height: 340px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  cursor: pointer;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(120, 120, 120, 0.2);
-}
-
-.info-box:hover {
-  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(120, 120, 120, 0.2);
-  transform: translateY(-8px) scale(1.02);
+  box-shadow: none;
 }
 
 .info-box h2 {

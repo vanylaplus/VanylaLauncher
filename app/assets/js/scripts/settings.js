@@ -623,6 +623,27 @@ const settingsCurrentMicrosoftAccounts = document.getElementById('settingsCurren
 const settingsCurrentMojangAccounts = document.getElementById('settingsCurrentMojangAccounts')
 
 /**
+ * Format the last login timestamp to a readable format
+ */
+function formatLastLogin(timestamp) {
+    if (!timestamp) return 'Jamais'
+    const now = new Date().getTime()
+    const diff = now - timestamp
+    const seconds = Math.floor(diff / 1000)
+    const minutes = Math.floor(seconds / 60)
+    const hours = Math.floor(minutes / 60)
+    const days = Math.floor(hours / 24)
+    
+    if (seconds < 60) return 'À l\'instant'
+    if (minutes < 60) return `Il y a ${minutes}m`
+    if (hours < 24) return `Il y a ${hours}h`
+    if (days < 7) return `Il y a ${days}j`
+    
+    const date = new Date(timestamp)
+    return date.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: '2-digit' })
+}
+
+/**
  * Add auth account elements for each one stored in the authentication database.
  */
 function populateAuthAccounts(){
@@ -638,6 +659,7 @@ function populateAuthAccounts(){
 
     authKeys.forEach((val) => {
         const acc = authAccounts[val]
+        const lastLoginText = formatLastLogin(acc.lastLogin)
 
         const accHtml = `<div class="settingsAuthAccount" uuid="${acc.uuid}">
             <div class="settingsAuthAccountLeft">
@@ -652,6 +674,10 @@ function populateAuthAccounts(){
                     <div class="settingsAuthAccountDetailPane">
                         <div class="settingsAuthAccountDetailTitle">${Lang.queryJS('settings.authAccountPopulate.uuid')}</div>
                         <div class="settingsAuthAccountDetailValue">${acc.uuid}</div>
+                    </div>
+                    <div class="settingsAuthAccountDetailPane">
+                        <div class="settingsAuthAccountDetailTitle">Dernière connexion</div>
+                        <div class="settingsAuthAccountDetailValue">${lastLoginText}</div>
                     </div>
                 </div>
                 <div class="settingsAuthAccountActions">

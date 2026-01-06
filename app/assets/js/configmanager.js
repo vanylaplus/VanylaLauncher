@@ -344,7 +344,8 @@ exports.addMojangAuthAccount = function(uuid, accessToken, username, displayName
         accessToken,
         username: username.trim(),
         uuid: uuid.trim(),
-        displayName: displayName.trim()
+        displayName: displayName.trim(),
+        lastLogin: new Date().getTime()
     }
     return config.authenticationDatabase[uuid]
 }
@@ -364,6 +365,7 @@ exports.addMojangAuthAccount = function(uuid, accessToken, username, displayName
 exports.updateMicrosoftAuthAccount = function(uuid, accessToken, msAccessToken, msRefreshToken, msExpires, mcExpires) {
     config.authenticationDatabase[uuid].accessToken = accessToken
     config.authenticationDatabase[uuid].expiresAt = mcExpires
+    config.authenticationDatabase[uuid].lastLogin = new Date().getTime()
     config.authenticationDatabase[uuid].microsoft.access_token = msAccessToken
     config.authenticationDatabase[uuid].microsoft.refresh_token = msRefreshToken
     config.authenticationDatabase[uuid].microsoft.expires_at = msExpires
@@ -392,6 +394,7 @@ exports.addMicrosoftAuthAccount = function(uuid, accessToken, name, mcExpires, m
         uuid: uuid.trim(),
         displayName: name.trim(),
         expiresAt: mcExpires,
+        lastLogin: new Date().getTime(),
         microsoft: {
             access_token: msAccessToken,
             refresh_token: msRefreshToken,
@@ -433,7 +436,12 @@ exports.removeAuthAccount = function(uuid){
  * @returns {Object} The selected authenticated account.
  */
 exports.getSelectedAccount = function(){
-    return config.authenticationDatabase[config.selectedAccount]
+    const acc = config.authenticationDatabase[config.selectedAccount]
+    // Initialize lastLogin if it doesn't exist
+    if(acc != null && !acc.lastLogin) {
+        acc.lastLogin = new Date().getTime()
+    }
+    return acc
 }
 
 /**

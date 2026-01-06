@@ -11,9 +11,15 @@ const remote                         = require('@electron/remote')
 const isDev                          = require('./assets/js/isdev')
 const { LoggerUtil }                 = require('helios-core')
 const Lang                           = require('./assets/js/langloader')
+const imageLazyLoader                = require('./assets/js/imagelazyloader')
 
 const loggerUICore             = LoggerUtil.getLogger('UICore')
 const loggerAutoUpdater        = LoggerUtil.getLogger('AutoUpdater')
+
+// Initialize image lazy loading on page load
+document.addEventListener('DOMContentLoaded', () => {
+    imageLazyLoader.observeAllImages()
+})
 
 // Log deprecation and process warnings.
 process.traceProcessWarnings = true

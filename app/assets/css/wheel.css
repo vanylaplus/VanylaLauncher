@@ -1,0 +1,164 @@
+/* ============================================================================
+   WHEEL PAGE STYLES
+   ============================================================================ */
+
+.wheel-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  overflow-y: auto;
+  background: linear-gradient(135deg, #1a2332 0%, #22304a 100%);
+}
+
+.wheel-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  max-width: 600px;
+}
+
+.wheel-title {
+  font-size: 2.5em;
+  font-weight: 900;
+  color: #fff;
+  margin: 0;
+  text-align: center;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.wheel-subtitle {
+  font-size: 1em;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+.wheel-section {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Wheel Pointer/Needle */
+.wheel-pointer {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-top: 20px solid rgba(0, 217, 255, 0.8);
+  z-index: 10;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.5));
+}
+
+/* Wheel Canvas Wrapper */
+.wheel-wrapper {
+  position: relative;
+  width: 400px;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  box-shadow: 
+    0 0 30px rgba(0, 217, 255, 0.3),
+    0 0 60px rgba(0, 100, 200, 0.2),
+    inset 0 0 30px rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  background: linear-gradient(135deg, rgba(0, 217, 255, 0.05) 0%, rgba(0, 100, 200, 0.05) 100%);
+}
+
+#wheelCanvas {
+  max-width: 100%;
+  height: auto;
+  filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.5));
+}
+
+/* Spin Button */
+.spin-button {
+  padding: 16px 48px;
+  font-size: 1.1em;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #fff;
+  background: linear-gradient(135deg, rgba(0, 217, 255, 0.2) 0%, rgba(0, 100, 200, 0.15) 100%);
+  border: 2px solid rgba(0, 217, 255, 0.5);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.spin-button:hover:not(:disabled) {
+  background: linear-gradient(135deg, rgba(0, 217, 255, 0.3) 0%, rgba(0, 100, 200, 0.25) 100%);
+  border-color: rgba(0, 217, 255, 0.7);
+  box-shadow: 
+    0 6px 16px rgba(0, 217, 255, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+.spin-button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.spin-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: linear-gradient(135deg, rgba(100, 100, 100, 0.15) 0%, rgba(80, 80, 80, 0.1) 100%);
+  border-color: rgba(120, 120, 120, 0.3);
+}
+
+/* Spin Status Message */
+.spin-status {
+  min-height: 30px;
+  text-align: center;
+  font-size: 1em;
+  font-weight: 600;
+  color: rgba(0, 217, 255, 0.8);
+  letter-spacing: 0.5px;
+}
+
+.spin-status.error {
+  color: rgba(255, 100, 100, 0.8);
+}
+
+.spin-status.success {
+  color: rgba(100, 255, 150, 0.8);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .wheel-wrapper {
+    width: 300px;
+    height: 300px;
+  }
+
+  #wheelCanvas {
+    width: 300px;
+    height: 300px;
+  }
+
+  .wheel-title {
+    font-size: 1.8em;
+  }
+
+  .wheel-subtitle {
+    font-size: 0.9em;
+  }
+}

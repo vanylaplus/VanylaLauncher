@@ -1,59 +1,7 @@
-<div id="cguContainer" style="display: none;background: linear-gradient(180deg, #18191c 0%, #18191c 100%);background-attachment: fixed;">
+<div id="cguContainer" style="display: none;background: #18191c;background-attachment: fixed;">
     <link rel="stylesheet" href="./assets/css/landing.css">
 
-    <!-- SIDEBAR: Left vertical column with icons -->
-    <div class="landing-sidebar">
-        <div class="sidebar-header">
-            <img id="cgu_image_seal" src="assets/images/SealCircle.png" alt="logo" style="width:52px;height:52px;border-radius:8px;"/>
-            <div id="cgu_updateAvailableTooltip" style="display:none;"><%- lang('landing.updateAvailableTooltip') %></div>
-        </div>
-
-        <div class="sidebar-icons">
-            <button class="sidebar-icon" id="cguSidebarHome" title="Home" onclick="switchView(getCurrentView(), VIEWS.landing)">
-                <svg width="44" height="44" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <polyline points="9 22 9 12 15 12 15 22" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </button>
-            <button class="sidebar-icon" id="cguSidebarHelp" title="Help" onclick="switchView(getCurrentView(), VIEWS.help)">
-                <svg width="44" height="44" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="12" cy="12" r="10" stroke="#fff" stroke-width="2"/>
-                    <path d="M9 9c0-1.657 1.343-3 3-3s3 1.343 3 3c0 1.306-.835 2.418-2 2.83V15" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <circle cx="12" cy="18" r="1" fill="#fff"/>
-                </svg>
-            </button>
-            <a href="https://vanylaplus.fr" class="sidebar-icon" id="cguSidebarGlobe" title="Servers" target="_blank" rel="noopener noreferrer" style="display:none">
-                <svg width="44" height="44" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="12" cy="12" r="10" stroke="#fff" stroke-width="2"/>
-                    <path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20" stroke="#fff" stroke-width="2"/>
-                </svg>
-            </a>
-            <button class="sidebar-icon" id="cguSidebarCGU" title="CGU">
-                <svg width="44" height="44" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M9 7v10M15 7v10M9 7h6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </button>
-            <button class="sidebar-icon" id="cguSidebarNews" title="News">
-                <svg width="44" height="44" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="3" y="4" width="18" height="16" rx="2" stroke="#fff" stroke-width="2"/>
-                    <path d="M7 8h10M7 12h10M7 16h6" stroke="#fff" stroke-width="2"/>
-                </svg>
-            </button>
-        </div>
-
-        <div class="sidebar-divider"></div>
-
-        <div class="sidebar-footer">
-            <button class="sidebar-icon" id="cguSidebarSettings" title="Settings">
-                <svg width="44" height="44" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="12" cy="12" r="3" stroke="#fff" stroke-width="2"/>
-                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h.09a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09c0 .66.39 1.26 1 1.51a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.09c0 .66.39 1.26 1 1.51a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09c-.66 0-1.26.39-1.51 1z" stroke="#fff" stroke-width="2"/>
-                </svg>
-            </button>
-            <span class="sidebar-version">v2.0.0</span>
-        </div>
-    </div>
+    <%- include('./includes/cgu-sidebar') %>
 
     <!-- MAIN CONTENT: Right column with topbar and CGU -->
     <div class="landing-main-column">
@@ -74,11 +22,16 @@
             </div>
 
             <div class="topbar-right">
-                <div id="cgu_user_content" class="profile-card" style="cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;">
-                    <div id="cgu_avatarContainer" class="profile-avatar"></div>
+                <div class="user_content profile-card" style="cursor:pointer;">
+                    <div class="profile-avatar"></div>
                     <div class="profile-text">
                         <span class="profile-label">Connecté sur</span>
-                        <span id="cgu_user_text" class="profile-name"></span>
+                        <span class="profile-name"></span>
+                    </div>
+                    <div class="profile-separator"></div>
+                    <div class="profile-tokens">
+                        <img src="./assets/images/jetons.png" alt="Jetons" class="tokens-icon">
+                        <span class="tokens-balance">0</span>
                     </div>
                 </div>
                 <div class="topbar-actions">
@@ -96,65 +49,207 @@
         <div style="display:flex;flex:1;overflow:hidden;">
             <div style="flex:1;overflow-y:auto;padding:0;">
                 <div style="max-width:100%;width:100%;margin:0;padding:0;">
-                    <!-- Two column boxes with background images -->
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:18px 18px 10px 18px;">
-                        <div style="background:linear-gradient(135deg, rgba(120, 120, 120, 0.2) 0%, rgba(100, 100, 100, 0.15) 100%), url('assets/images/cgu1.png');background-size:cover;background-position:center;border:2px solid rgba(120, 120, 120, 0.4);border-radius:16px;padding:32px;min-height:340px;display:flex;flex-direction:column;justify-content:space-between;transition:all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);cursor:pointer;box-shadow:0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(120, 120, 120, 0.2);" onmouseover="this.style.boxShadow='0 12px 48px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(120, 120, 120, 0.2)';this.style.transform='translateY(-8px) scale(1.02)'" onmouseout="this.style.boxShadow='0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(120, 120, 120, 0.2)';this.style.transform='translateY(0) scale(1)'">
-                            <h2 style="color:#fff;font-size:1.4em;margin:0;text-shadow:0 3px 12px rgba(0,0,0,0.6);font-weight:700;letter-spacing:0.5px;">Conditions Légales</h2>
-                            <p style="color:rgba(255,255,255,0.92);margin:16px 0 0 0;text-shadow:0 2px 6px rgba(0,0,0,0.6);font-weight:500;line-height:1.5;">Consultez nos conditions d'utilisation complètes et les obligations légales qui régissent votre accès à nos services.</p>
+                    <!-- SHOP HEADER SECTION -->
+                    <div style="background:linear-gradient(135deg, rgba(20, 20, 20, 0.85) 0%, rgba(30, 30, 30, 0.85) 100%), url('./assets/images/backgrounds/box.jpg') center/cover;padding:32px 18px;margin:0;border-bottom:1px solid rgba(120, 120, 120, 0.15);">
+                        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;gap:16px;">
+                            <button id="shopInventoryBtn" style="padding:10px 20px;background:linear-gradient(135deg, rgba(0, 144, 255, 0.9) 0%, rgba(0, 112, 204, 0.9) 100%);border:1px solid rgba(0, 144, 255, 0.4);border-radius:8px;color:#fff;font-weight:600;cursor:pointer;transition:all 0.3s ease;font-size:0.95em;white-space:nowrap;" onmouseover="this.style.background='linear-gradient(135deg, rgba(0, 144, 255, 1) 0%, rgba(0, 112, 204, 1) 100%)';this.style.boxShadow='0 8px 16px rgba(0, 144, 255, 0.4)';this.style.transform='translateY(-2px)';" onmouseout="this.style.background='linear-gradient(135deg, rgba(0, 144, 255, 0.9) 0%, rgba(0, 112, 204, 0.9) 100%)';this.style.boxShadow='none';this.style.transform='translateY(0)';">
+                                📦 Inventaire
+                            </button>
+                            <h1 style="color:#fff;font-size:2em;margin:0;font-weight:700;flex:1;text-align:center;">VanylaPlus Store</h1>
+                            <div style="width:100px;"></div>
                         </div>
-                        <div style="background:linear-gradient(135deg, rgba(120, 120, 120, 0.2) 0%, rgba(100, 100, 100, 0.15) 100%), url('assets/images/cgu2.png');background-size:cover;background-position:center;border:2px solid rgba(120, 120, 120, 0.4);border-radius:16px;padding:32px;min-height:340px;display:flex;flex-direction:column;justify-content:space-between;transition:all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);cursor:pointer;box-shadow:0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(120, 120, 120, 0.2);" onmouseover="this.style.boxShadow='0 12px 48px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(120, 120, 120, 0.2)';this.style.transform='translateY(-8px) scale(1.02)'" onmouseout="this.style.boxShadow='0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(120, 120, 120, 0.2)';this.style.transform='translateY(0) scale(1)'">
-                            <h2 style="color:#fff;font-size:1.4em;margin:0;text-shadow:0 3px 12px rgba(0,0,0,0.6);font-weight:700;letter-spacing:0.5px;">Droits & Responsabilités</h2>
-                            <p style="color:rgba(255,255,255,0.92);margin:16px 0 0 0;text-shadow:0 2px 6px rgba(0,0,0,0.6);font-weight:500;line-height:1.5;">Découvrez vos droits en tant qu'utilisateur et nos responsabilités mutuelles pour une expérience sécurisée.</p>
+                        
+                        <!-- Search Bar -->
+                        <div style="display:flex;gap:12px;margin-bottom:24px;max-width:600px;margin-left:auto;margin-right:auto;">
+                            <input type="text" id="shopSearchInput" placeholder="Rechercher un produit..." style="flex:1;padding:12px 16px;border-radius:8px;border:1px solid rgba(120, 120, 120, 0.3);background:rgba(30, 30, 30, 0.8);color:#fff;font-size:0.95em;transition:all 0.3s ease;"/>
+                            <button style="padding:12px 24px;background:linear-gradient(135deg, #0090ff 0%, #0070cc 100%);border:none;border-radius:8px;color:#fff;font-weight:600;cursor:pointer;transition:all 0.3s ease;font-size:0.95em;">Rechercher</button>
+                        </div>
+
+                        <!-- Category Filter -->
+                        <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
+                            <button class="shop-filter-btn" data-filter="all" style="padding:8px 16px;background:rgba(0, 144, 255, 0.9);border:none;border-radius:8px;color:#fff;font-weight:600;cursor:pointer;transition:all 0.3s ease;font-size:0.9em;">Tous</button>
+                            <button class="shop-filter-btn" data-filter="jetons" style="padding:8px 16px;background:rgba(144, 238, 144, 0.18);border:1px solid rgba(144, 238, 144, 0.4);border-radius:8px;color:#fff;font-weight:600;cursor:pointer;transition:all 0.3s ease;font-size:0.9em;">Jetons</button>
+                            <button class="shop-filter-btn" data-filter="cosmetics" style="padding:8px 16px;background:rgba(120, 120, 120, 0.3);border:1px solid rgba(120, 120, 120, 0.4);border-radius:8px;color:#fff;font-weight:600;cursor:pointer;transition:all 0.3s ease;font-size:0.9em;">Cosmétiques</button>
+                            <button class="shop-filter-btn" data-filter="capes" style="padding:8px 16px;background:rgba(120, 120, 120, 0.3);border:1px solid rgba(120, 120, 120, 0.4);border-radius:8px;color:#fff;font-weight:600;cursor:pointer;transition:all 0.3s ease;font-size:0.9em;">Capes</button>
+                            <button class="shop-filter-btn" data-filter="items" style="padding:8px 16px;background:rgba(120, 120, 120, 0.3);border:1px solid rgba(120, 120, 120, 0.4);border-radius:8px;color:#fff;font-weight:600;cursor:pointer;transition:all 0.3s ease;font-size:0.9em;">Emotes</button>
                         </div>
                     </div>
 
-                    <!-- CGU Content Box - Modernisé -->
-                    <div style="background:linear-gradient(135deg, rgba(80, 80, 80, 0.08) 0%, rgba(100, 100, 100, 0.1) 100%);border:1px solid rgba(120, 120, 120, 0.25);border-radius:14px;padding:48px;box-shadow:0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(120, 120, 120, 0.1);backdrop-filter:blur(10px);margin:18px 18px 48px 18px;">
-                        <h1 style="color:#fff;font-size:1.5em;margin-bottom:8px;">Conditions Générales d'Utilisation</h1>
-                        <p style="color:rgba(255,255,255,0.6);margin-bottom:32px;">Dernière mise à jour: Janvier 2026</p>
+                    <!-- PRODUCTS GRID -->
+                    <div id="shopProductsGrid" style="display:grid;grid-template-columns:repeat(auto-fill, minmax(250px, 1fr));gap:20px;padding:32px 18px;">
+                        <!-- Products will be injected here by JavaScript -->
+                    </div>
 
-                        <div style="color:rgba(255,255,255,0.85);line-height:1.8;font-size:0.95em;">
-                            <h3 style="color:#fff;font-size:1.15em;margin:32px 0 16px 0;font-weight:600;border-left:3px solid rgba(120, 120, 120, 0.6);padding-left:16px;">1. Acceptation des Conditions</h3>
-                            <p style="margin-bottom:16px;padding:0 0 0 16px;">En utilisant VanylaPlus, vous acceptez de respecter toutes les conditions énoncées dans ce document. Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser le service.</p>
-
-                            <h3 style="color:#fff;font-size:1.15em;margin:32px 0 16px 0;font-weight:600;border-left:3px solid rgba(120, 120, 120, 0.6);padding-left:16px;">2. Licence d'Utilisation</h3>
-                            <p style="margin-bottom:16px;padding:0 0 0 16px;">VanylaPlus vous accorde une licence limitée, non-exclusive et révocable pour utiliser ce service à titre personnel et non-commercial. Vous ne pouvez pas reproduire, modifier ou distribuer le contenu sans autorisation préalable.</p>
-
-                            <h3 style="color:#fff;font-size:1.15em;margin:32px 0 16px 0;font-weight:600;border-left:3px solid rgba(120, 120, 120, 0.6);padding-left:16px;">3. Propriété Intellectuelle</h3>
-                            <p style="margin-bottom:16px;padding:0 0 0 16px;">Tous les contenus, logos, textes et graphiques présents dans VanylaPlus sont la propriété de VanylaPlus ou de ses tiers partenaires. Toute utilisation non autorisée est interdite.</p>
-
-                            <h3 style="color:#fff;font-size:1.15em;margin:32px 0 16px 0;font-weight:600;border-left:3px solid rgba(120, 120, 120, 0.6);padding-left:16px;">4. Comptes Utilisateur</h3>
-                            <p style="margin-bottom:16px;padding:0 0 0 16px;">Vous êtes responsable de maintenir la confidentialité de vos identifiants de compte. Vous acceptez d'être responsable de toutes les activités qui se produisent sous votre compte. Vous devez immédiatement informer VanylaPlus de tout accès non autorisé.</p>
-
-                            <h3 style="color:#fff;font-size:1.15em;margin:32px 0 16px 0;font-weight:600;border-left:3px solid rgba(120, 120, 120, 0.6);padding-left:16px;">5. Utilisation Interdite</h3>
-                            <p style="margin-bottom:16px;padding:0 0 0 16px;">Vous acceptez de ne pas:</p>
-                            <ul style="margin:8px 0 16px 36px;line-height:1.8;list-style:none;">
-                                <li style="margin-bottom:8px;"><span style="color:rgba(120, 120, 120, 0.8);margin-right:8px;">▸</span>Utiliser le service à titre commercial</li>
-                                <li style="margin-bottom:8px;"><span style="color:rgba(120, 120, 120, 0.8);margin-right:8px;">▸</span>Transmettre des virus, malwares ou codes malveillants</li>
-                                <li style="margin-bottom:8px;"><span style="color:rgba(120, 120, 120, 0.8);margin-right:8px;">▸</span>Harceler, menacer ou abuser d'autres utilisateurs</li>
-                                <li style="margin-bottom:8px;"><span style="color:rgba(120, 120, 120, 0.8);margin-right:8px;">▸</span>Tenter de contourner les mesures de sécurité</li>
-                                <li style="margin-bottom:8px;"><span style="color:rgba(120, 120, 120, 0.8);margin-right:8px;">▸</span>Usurper l'identité d'une autre personne</li>
-                                <li style="margin-bottom:8px;"><span style="color:rgba(120, 120, 120, 0.8);margin-right:8px;">▸</span>Utiliser le service pour des activités illégales</li>
-                            </ul>
-
-                            <h3 style="color:#fff;font-size:1.15em;margin:32px 0 16px 0;font-weight:600;border-left:3px solid rgba(120, 120, 120, 0.6);padding-left:16px;">6. Limitation de Responsabilité</h3>
-                            <p style="margin-bottom:16px;padding:0 0 0 16px;">VanylaPlus est fourni "tel quel" sans garantie. VanylaPlus n'est pas responsable des dommages directs ou indirects résultant de votre utilisation ou de votre incapacité à utiliser le service.</p>
-
-                            <h3 style="color:#fff;font-size:1.15em;margin:32px 0 16px 0;font-weight:600;border-left:3px solid rgba(120, 120, 120, 0.6);padding-left:16px;">7. Résiliation</h3>
-                            <p style="margin-bottom:16px;padding:0 0 0 16px;">VanylaPlus se réserve le droit de suspendre ou de résilier votre compte à tout moment si vous violez ces conditions.</p>
-
-                            <h3 style="color:#fff;font-size:1.15em;margin:32px 0 16px 0;font-weight:600;border-left:3px solid rgba(120, 120, 120, 0.6);padding-left:16px;">8. Modifications des Conditions</h3>
-                            <p style="margin-bottom:16px;padding:0 0 0 16px;">VanylaPlus peut modifier ces conditions à tout moment. Les modifications entrent en vigueur dès leur publication. Votre utilisation continue du service signifie votre acceptation des nouvelles conditions.</p>
-
-                            <h3 style="color:#fff;font-size:1.15em;margin:32px 0 16px 0;font-weight:600;border-left:3px solid rgba(120, 120, 120, 0.6);padding-left:16px;">9. Contact</h3>
-                            <p style="margin-bottom:16px;padding:0 0 0 16px;">Pour toute question concernant ces conditions, veuillez nous contacter à: <strong style="color:#fff;">vanylaplus.info@gmail.com</strong></p>
-
-                            <h3 style="color:#fff;font-size:1.15em;margin:32px 0 16px 0;font-weight:600;border-left:3px solid rgba(120, 120, 120, 0.6);padding-left:16px;">10. Loi Applicable</h3>
-                            <p style="padding:0 0 0 16px;">Ces conditions sont régies par les lois applicables. En utilisant VanylaPlus, vous acceptez la juridiction exclusive des tribunaux compétents.</p>
-                        </div>
+                    <!-- EMPTY STATE -->
+                    <div id="shopEmptyState" style="display:none;text-align:center;padding:64px 32px;color:rgba(255, 255, 255, 0.6);">
+                        <p style="font-size:1.1em;">Aucun produit trouvé</p>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- INVENTORY MODAL -->
+<div id="shopInventoryModal" style="
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 10000;
+    align-items: center;
+    justify-content: center;
+">
+    <div style="
+        background: linear-gradient(135deg, rgba(40, 40, 40, 0.98) 0%, rgba(50, 50, 50, 0.98) 100%);
+        border: 1px solid rgba(0, 144, 255, 0.3);
+        border-radius: 8px;
+        width: 90%;
+        max-width: 800px;
+        max-height: 80vh;
+        display: flex;
+        flex-direction: column;
+        box-shadow: none;
+        backdrop-filter: blur(10px);
+    ">
+        <!-- Modal Header -->
+        <div style="
+            padding: 24px;
+            border-bottom: 1px solid rgba(120, 120, 120, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(50, 50, 50, 0.6) 0%, rgba(40, 40, 40, 0.6) 100%);
+        ">
+            <h2 style="margin: 0; color: #fff; font-size: 1.5em; font-weight: 700;">📦 Mon inventaire</h2>
+            <button id="shopInventoryCloseBtn" style="
+                background: linear-gradient(135deg, rgba(0, 144, 255, 0.7) 0%, rgba(0, 112, 204, 0.7) 100%);
+                border: 1px solid rgba(0, 144, 255, 0.4);
+                border-radius: 6px;
+                color: #fff;
+                font-weight: 600;
+                cursor: pointer;
+                padding: 8px 16px;
+                transition: all 0.3s ease;
+                font-size: 0.95em;
+            " onmouseover="this.style.background='linear-gradient(135deg, rgba(0, 144, 255, 1) 0%, rgba(0, 112, 204, 1) 100%)';this.style.boxShadow='0 4px 12px rgba(0, 144, 255, 0.4)';" onmouseout="this.style.background='linear-gradient(135deg, rgba(0, 144, 255, 0.7) 0%, rgba(0, 112, 204, 0.7) 100%)';this.style.boxShadow='none';">✕</button>
+        </div>
+
+        <!-- Modal Content -->
+        <div id="shopInventoryContent" style="
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+            color: #fff;
+        ">
+            <div style="text-align: center; color: rgba(255, 255, 255, 0.6); padding: 40px;">
+                <p style="font-size: 1.1em;">Vous n'avez pas encore d'articles</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- PURCHASE CONFIRMATION MODAL -->
+<div id="shopPurchaseConfirmModal" style="
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 10001;
+    align-items: center;
+    justify-content: center;
+">
+    <div style="
+        background: linear-gradient(135deg, rgba(40, 40, 40, 0.98) 0%, rgba(50, 50, 50, 0.98) 100%);
+        border: 1px solid rgba(0, 144, 255, 0.3);
+        border-radius: 8px;
+        width: 90%;
+        max-width: 500px;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 0 30px rgba(0, 144, 255, 0.2);
+        backdrop-filter: blur(10px);
+    ">
+        <!-- Modal Header -->
+        <div style="
+            padding: 24px;
+            border-bottom: 1px solid rgba(120, 120, 120, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(50, 50, 50, 0.6) 0%, rgba(40, 40, 40, 0.6) 100%);
+        ">
+            <h2 style="margin: 0; color: #fff; font-size: 1.3em; font-weight: 700;">❓ Confirmation d'achat</h2>
+            <button id="shopPurchaseConfirmCloseBtn" style="
+                background: linear-gradient(135deg, rgba(0, 144, 255, 0.7) 0%, rgba(0, 112, 204, 0.7) 100%);
+                border: 1px solid rgba(0, 144, 255, 0.4);
+                border-radius: 6px;
+                color: #fff;
+                font-weight: 600;
+                cursor: pointer;
+                padding: 8px 16px;
+                font-size: 0.95em;
+                transition: all 0.3s ease;
+            " onmouseover="this.style.background='linear-gradient(135deg, rgba(0, 144, 255, 1) 0%, rgba(0, 112, 204, 1) 100%)';this.style.boxShadow='0 4px 12px rgba(0, 144, 255, 0.4)';" onmouseout="this.style.background='linear-gradient(135deg, rgba(0, 144, 255, 0.7) 0%, rgba(0, 112, 204, 0.7) 100%)';this.style.boxShadow='none';">✕</button>
+        </div>
+
+        <!-- Modal Content -->
+        <div style="
+            padding: 32px;
+            color: #fff;
+            text-align: center;
+        ">
+            <div id="shopPurchaseConfirmMessage" style="
+                font-size: 1em;
+                line-height: 1.6;
+                margin-bottom: 24px;
+                color: rgba(255, 255, 255, 0.9);
+            "></div>
+        </div>
+
+        <!-- Modal Footer with Buttons -->
+        <div style="
+            padding: 24px;
+            border-top: 1px solid rgba(120, 120, 120, 0.3);
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(50, 50, 50, 0.4) 0%, rgba(40, 40, 40, 0.4) 100%);
+        ">
+            <button id="shopPurchaseConfirmNo" style="
+                flex: 1;
+                padding: 12px 24px;
+                background: linear-gradient(135deg, rgba(0, 144, 255, 0.7) 0%, rgba(0, 112, 204, 0.7) 100%);
+                border: 1px solid rgba(0, 144, 255, 0.4);
+                border-radius: 6px;
+                color: #fff;
+                font-weight: 600;
+                cursor: pointer;
+                font-size: 0.95em;
+                transition: all 0.3s ease;
+            " onmouseover="this.style.background='linear-gradient(135deg, rgba(0, 144, 255, 1) 0%, rgba(0, 112, 204, 1) 100%)';this.style.boxShadow='0 4px 12px rgba(0, 144, 255, 0.4)';" onmouseout="this.style.background='linear-gradient(135deg, rgba(0, 144, 255, 0.7) 0%, rgba(0, 112, 204, 0.7) 100%)';this.style.boxShadow='none';">
+                Non
+            </button>
+            <button id="shopPurchaseConfirmYes" style="
+                flex: 1;
+                padding: 12px 24px;
+                background: linear-gradient(135deg, rgba(0, 144, 255, 0.9) 0%, rgba(0, 112, 204, 0.9) 100%);
+                border: 1px solid rgba(0, 144, 255, 0.4);
+                border-radius: 6px;
+                color: #fff;
+                font-weight: 600;
+                cursor: pointer;
+                font-size: 0.95em;
+                transition: all 0.3s ease;
+            " onmouseover="this.style.background='linear-gradient(135deg, rgba(0, 144, 255, 1) 0%, rgba(0, 112, 204, 1) 100%)';this.style.boxShadow='0 8px 16px rgba(0, 144, 255, 0.4)';this.style.transform='translateY(-2px)';" onmouseout="this.style.background='linear-gradient(135deg, rgba(0, 144, 255, 0.9) 0%, rgba(0, 112, 204, 0.9) 100%)';this.style.boxShadow='none';this.style.transform='translateY(0)';">
+                Oui
+            </button>
         </div>
     </div>
 </div>
@@ -180,3 +275,5 @@
   grid-row: 1 / -1 !important;
 }
 </style>
+
+<script src="assets/js/scripts/shop.js"></script>

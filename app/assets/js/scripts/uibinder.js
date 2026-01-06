@@ -150,8 +150,7 @@ async function showMainUI(data){
             validateSelectedAccount()
         }
 
-        // Récupérer la dernière vue sauvegardée
-        const lastView = localStorage.getItem('lastView')
+        // Always spawn on Landing at startup (except first launch which goes to Welcome)
         let viewToShow = VIEWS.landing
 
         if(ConfigManager.isFirstLaunch()){
@@ -159,14 +158,9 @@ async function showMainUI(data){
             viewToShow = VIEWS.welcome
         } else {
             if(isLoggedIn){
-                // Si une dernière vue existe et que l'utilisateur est connecté, la restaurer
-                if(lastView && Object.values(VIEWS).includes(lastView)){
-                    currentView = lastView
-                    viewToShow = lastView
-                } else {
-                    currentView = VIEWS.landing
-                    viewToShow = VIEWS.landing
-                }
+                // Always show landing on startup, not the last visited page
+                currentView = VIEWS.landing
+                viewToShow = VIEWS.landing
             } else {
                 loginOptionsCancelEnabled(false)
                 loginOptionsViewOnLoginSuccess = VIEWS.landing
@@ -177,7 +171,6 @@ async function showMainUI(data){
         }
 
         $(viewToShow).fadeIn(1000)
-        
         // Masquer le background pendant la transition du loading
         document.body.classList.add('transition-mode')
 

@@ -1637,7 +1637,11 @@ async function prepareSettings(first = false) {
     
     // Bind back button to return to landing
     document.getElementById('settingsBackButton').onclick = e => {
-        fullSettingsSave()
+        try {
+            fullSettingsSave()
+        } catch(err) {
+            console.error('Error saving settings:', err)
+        }
         switchView(getCurrentView(), VIEWS.landing)
     }
 }

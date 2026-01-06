@@ -42,8 +42,15 @@ let currentView
  */
 function switchView(current, next, transitionTime = 250, onCurrentFade = () => {}, onNextFade = () => {}){
     currentView = next
-    // Save the current view to localStorage for restoration
-    localStorage.setItem('lastView', next)
+    
+    // Ne pas sauvegarder Settings, CGU, Help dans localStorage - always return to landing
+    const viewName = Object.keys(VIEWS).find(key => VIEWS[key] === next)
+    if (viewName && !['settings', 'cgu', 'help'].includes(viewName)) {
+        localStorage.setItem('lastView', next)
+    } else {
+        // Pour settings/cgu/help, reset à landing
+        localStorage.setItem('lastView', VIEWS.landing)
+    }
 
     // Extract view name from container ID and preload its assets
     const viewName = Object.keys(VIEWS).find(key => VIEWS[key] === next)

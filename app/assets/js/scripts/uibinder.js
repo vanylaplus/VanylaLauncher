@@ -43,8 +43,10 @@ let currentView
 function switchView(current, next, transitionTime = 250, onCurrentFade = () => {}, onNextFade = () => {}){
     currentView = next
     
-    // Ne pas sauvegarder Settings, CGU, Help dans localStorage - always return to landing
+    // Extract view name from container ID and preload its assets
     const viewName = Object.keys(VIEWS).find(key => VIEWS[key] === next)
+    
+    // Ne pas sauvegarder Settings, CGU, Help dans localStorage - always return to landing
     if (viewName && !['settings', 'cgu', 'help'].includes(viewName)) {
         localStorage.setItem('lastView', next)
     } else {
@@ -52,8 +54,7 @@ function switchView(current, next, transitionTime = 250, onCurrentFade = () => {
         localStorage.setItem('lastView', VIEWS.landing)
     }
 
-    // Extract view name from container ID and preload its assets
-    const viewName = Object.keys(VIEWS).find(key => VIEWS[key] === next)
+    // Preload assets for the view
     if (viewName) {
         assetPreloader.preloadViewAssets(viewName)
             .catch(e => console.debug('[switchView] Asset preload error:', e))

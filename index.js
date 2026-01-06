@@ -18,6 +18,7 @@ LangLoader.setupLanguage()
 
 // Setup auto updater listeners only once
 let autoUpdaterInitialized = false
+let autoUpdaterEvent = null
 
 function initAutoUpdater(event, data) {
 
@@ -36,22 +37,25 @@ function initAutoUpdater(event, data) {
         autoUpdater.autoDownload = false
     }
     
+    // Store the event for future notifications
+    autoUpdaterEvent = event
+    
     // Only add listeners once to avoid memory leak
     if(!autoUpdaterInitialized) {
         autoUpdater.on('update-available', (info) => {
-            ipcMain.emit('sendAutoUpdateNotification', 'update-available', info)
+            if(autoUpdaterEvent) autoUpdaterEvent.sender.send('autoUpdateNotification', 'update-available', info)
         })
         autoUpdater.on('update-downloaded', (info) => {
-            ipcMain.emit('sendAutoUpdateNotification', 'update-downloaded', info)
+            if(autoUpdaterEvent) autoUpdaterEvent.sender.send('autoUpdateNotification', 'update-downloaded', info)
         })
         autoUpdater.on('update-not-available', (info) => {
-            ipcMain.emit('sendAutoUpdateNotification', 'update-not-available', info)
+            if(autoUpdaterEvent) autoUpdaterEvent.sender.send('autoUpdateNotification', 'update-not-available', info)
         })
         autoUpdater.on('checking-for-update', () => {
-            ipcMain.emit('sendAutoUpdateNotification', 'checking-for-update')
+            if(autoUpdaterEvent) autoUpdaterEvent.sender.send('autoUpdateNotification', 'checking-for-update')
         })
         autoUpdater.on('error', (err) => {
-            ipcMain.emit('sendAutoUpdateNotification', 'realerror', err)
+            if(autoUpdaterEvent) autoUpdaterEvent.sender.send('autoUpdateNotification', 'realerror', err)
         })
         autoUpdaterInitialized = true
     }

@@ -46,11 +46,11 @@ function switchView(current, next, transitionTime = 250, onCurrentFade = () => {
     // Extract view name from container ID and preload its assets
     const viewName = Object.keys(VIEWS).find(key => VIEWS[key] === next)
     
-    // Ne pas sauvegarder Settings, CGU, Help dans localStorage - always return to landing
-    if (viewName && !['settings', 'cgu', 'help'].includes(viewName)) {
+    // Ne pas sauvegarder CGU, Help dans localStorage - always return to landing
+    if (viewName && !['cgu', 'help'].includes(viewName)) {
         localStorage.setItem('lastView', next)
     } else {
-        // Pour settings/cgu/help, reset à landing
+        // Pour cgu/help, reset à landing
         localStorage.setItem('lastView', VIEWS.landing)
     }
 
@@ -158,9 +158,23 @@ async function showMainUI(data){
             viewToShow = VIEWS.welcome
         } else {
             if(isLoggedIn){
-                // Always show landing on startup, not the last visited page
-                currentView = VIEWS.landing
-                viewToShow = VIEWS.landing
+                // Check if this is a page reload (sessionStorage flag)
+                if(sessionStorage.getItem('isPageReload')){
+                    // This is a refresh - restore the last viewed page
+                    const lastView = localStorage.getItem('lastView')
+                    if(lastView && Object.values(VIEWS).includes(lastView)){
+                        currentView = lastView
+                        viewToShow = lastView
+                    } else {
+                        currentView = VIEWS.landing
+                        viewToShow = VIEWS.landing
+                    }
+                    sessionStorage.removeItem('isPageReload')
+                } else {
+                    // Fresh launcher startup - always show landing
+                    currentView = VIEWS.landing
+                    viewToShow = VIEWS.landing
+                }
             } else {
                 loginOptionsCancelEnabled(false)
                 loginOptionsViewOnLoginSuccess = VIEWS.landing

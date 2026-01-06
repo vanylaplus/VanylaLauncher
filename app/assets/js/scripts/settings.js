@@ -1627,6 +1627,7 @@ async function prepareSettings(first = false) {
         setupSettingsTabs()
         initSettingsValidators()
         prepareUpdateTab()
+        await prepareModsTab()
     } else {
         await prepareModsTab()
     }

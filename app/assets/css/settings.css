@@ -100,16 +100,6 @@
     padding-bottom: 0 !important;
 }
 
-/* ===== EXTENDED CONTENT AREA ===== */
-#settingsContainerRight {
-    padding: 60px 80px !important;
-    max-width: 100% !important;
-    width: 100% !important;
-    flex: 1 !important;
-    display: flex !important;
-    flex-direction: column !important;
-}
-
 /* ===== SETTINGS TOPBAR OVERRIDE ===== */
 .landing-topbar {
     background: linear-gradient(180deg, rgba(24, 25, 28, 0.95), rgba(24, 25, 28, 0.9)) !important;
@@ -149,23 +139,21 @@
 
 /* ===== SETTINGS TAB HEADERS ===== */
 .settingsTabHeader {
-    margin-bottom: 40px !important;
+    margin-bottom: 24px !important;
     display: flex !important;
     flex-direction: column !important;
-    gap: 12px !important;
+    gap: 8px !important;
 }
 
 .settingsTabHeaderText {
-    font-size: 2em !important;
-    font-weight: 700 !important;
+    font-size: 1.3em !important;
+    font-weight: 600 !important;
     color: #fff !important;
-    letter-spacing: 0.5px !important;
 }
 
 .settingsTabHeaderDesc {
-    font-size: 1.05em !important;
-    color: rgba(255, 255, 255, 0.7) !important;
-    line-height: 1.6 !important;
+    font-size: 0.9em !important;
+    color: rgba(255, 255, 255, 0.6) !important;
 }
 
 /* ===== SETTINGS FIELD CONTAINERS ===== */
@@ -173,34 +161,32 @@
     display: flex !important;
     justify-content: space-between !important;
     align-items: center !important;
-    padding: 24px 0 !important;
+    padding: 16px 0 !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-    gap: 20px !important;
 }
 
 .settingsFieldLeft {
     flex: 1 !important;
     display: flex !important;
     flex-direction: column !important;
-    gap: 8px !important;
+    gap: 4px !important;
 }
 
 .settingsFieldRight {
     display: flex !important;
     align-items: center !important;
-    gap: 12px !important;
+    gap: 8px !important;
 }
 
 .settingsFieldTitle {
-    font-size: 1.15em !important;
-    font-weight: 600 !important;
+    font-size: 1em !important;
+    font-weight: 500 !important;
     color: #fff !important;
 }
 
 .settingsFieldDesc {
-    font-size: 0.95em !important;
-    color: rgba(255, 255, 255, 0.6) !important;
-    line-height: 1.5 !important;
+    font-size: 0.85em !important;
+    color: rgba(255, 255, 255, 0.5) !important;
 }
 
 /* ===== TOGGLE SWITCHES ===== */
@@ -684,73 +670,68 @@ input:checked + .toggleSwitchSlider:before {
 
 /* ===== ACCOUNT SETTINGS ===== */
 .settingsAuthAccountTypeContainer {
-    margin: 50px 0 !important;
-    padding: 40px !important;
+    margin: 24px 0 !important;
+    padding: 16px !important;
     background: rgba(0, 0, 0, 0.2) !important;
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    border-radius: 12px !important;
-    min-height: 150px !important;
+    border-radius: 8px !important;
 }
 
 .settingsAuthAccountTypeHeader {
     display: flex !important;
     justify-content: space-between !important;
     align-items: center !important;
-    margin-bottom: 24px !important;
-    padding-bottom: 20px !important;
+    margin-bottom: 16px !important;
+    padding-bottom: 12px !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
 
 .settingsAuthAccountTypeHeaderLeft {
     display: flex !important;
     align-items: center !important;
-    gap: 16px !important;
+    gap: 12px !important;
 }
 
 .settingsAuthAccountTypeHeaderLeft svg {
-    width: 32px !important;
-    height: 32px !important;
+    width: 24px !important;
+    height: 24px !important;
 }
 
 .settingsAuthAccountTypeHeaderLeft span {
-    font-weight: 700 !important;
+    font-weight: 600 !important;
     color: #fff !important;
-    font-size: 1.2em !important;
 }
 
 .settingsAddAuthAccount {
-    padding: 16px 32px !important;
+    padding: 6px 12px !important;
     background: rgba(0, 144, 255, 0.2) !important;
-    border: 2px solid rgba(0, 144, 255, 0.5) !important;
-    border-radius: 8px !important;
+    border: 1px solid rgba(0, 144, 255, 0.4) !important;
+    border-radius: 4px !important;
     color: #0090ff !important;
     cursor: pointer !important;
     transition: all 0.2s ease !important;
-    font-size: 1.1em !important;
-    font-weight: 700 !important;
-    min-height: 50px !important;
-    white-space: nowrap !important;
+    font-size: 0.9em !important;
+    font-weight: 500 !important;
 }
 
 .settingsAddAuthAccount:hover {
     background: rgba(0, 144, 255, 0.3) !important;
     border-color: #0090ff !important;
-    box-shadow: 0 0 12px rgba(0, 144, 255, 0.3) !important;
-    transform: translateY(-2px) !important;
+    box-shadow: 0 0 8px rgba(0, 144, 255, 0.3) !important;
 }
 
 .settingsCurrentAccounts {
     display: flex !important;
     flex-direction: column !important;
-    gap: 16px !important;
+    gap: 8px !important;
 }
 
 /* ===== DATA DIRECTORY ===== */
 #settingsDataDirTitle {
-    font-size: 1.2em !important;
-    font-weight: 700 !important;
+    font-size: 1.05em !important;
+    font-weight: 600 !important;
     color: #fff !important;
-    margin-bottom: 16px !important;
+    margin-bottom: 12px !important;
 }
 
 /* ===== ABOUT AND UPDATE TABS ===== */

@@ -1,12 +1,12 @@
 /**
- * WheelManager - Gestion du cooldown de 24h de la roue de fortune
+ * WheelManager - Gestion du cooldown quotidien de la roue de fortune
  * Utilise UUID pour éviter les triques (anti-bypass par IP/cookies)
  */
 
 class WheelManager {
     constructor() {
         this.STORAGE_PREFIX = 'wheel_spin_';
-        this.COOLDOWN_MS = 24 * 60 * 60 * 1000; // 24 heures en millisecondes
+        this.SPIN_LIMIT = 1; // 1 spin par jour
     }
 
     /**
@@ -21,13 +21,14 @@ class WheelManager {
     }
 
     /**
-     * Enregistre un spin pour le joueur (stocke l'heure actuelle)
+     * Enregistre un spin pour le joueur (stocke la date d'aujourd'hui)
      * @param {string} uuid - UUID du joueur
      */
     recordSpin(uuid) {
         if (!uuid) return;
-        // Stocke le timestamp exact du moment du spin
-        localStorage.setItem(this.STORAGE_PREFIX + uuid, Date.now().toString());
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        localStorage.setItem(this.STORAGE_PREFIX + uuid, today.getTime().toString());
     }
 
     /**
@@ -41,15 +42,17 @@ class WheelManager {
         const lastSpinTime = this.getLastSpinTime(uuid);
         if (lastSpinTime === 0) return true; // Jamais tourné
         
-        const now = Date.now();
-        const timeSinceLastSpin = now - lastSpinTime;
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const lastSpinDate = new Date(lastSpinTime);
+        lastSpinDate.setHours(0, 0, 0, 0);
         
-        // Peut tourner si 24h se sont écoulées depuis le dernier spin
-        return timeSinceLastSpin >= this.COOLDOWN_MS;
+        // Peut tourner si la date du dernier spin est différente d'aujourd'hui
+        return today.getTime() !== lastSpinDate.getTime();
     }
 
     /**
-     * Calcule le temps restant avant le prochain spin (24h après le dernier spin)
+     * Calcule le temps restant avant le prochain spin
      * @param {string} uuid - UUID du joueur
      * @returns {Object} {canSpin, hours, minutes, seconds, timeString}
      */
@@ -75,10 +78,15 @@ class WheelManager {
         }
         
         const lastSpinTime = this.getLastSpinTime(uuid);
-        const nextSpinTime = lastSpinTime + this.COOLDOWN_MS;
+        const lastSpinDate = new Date(lastSpinTime);
         
-        const now = Date.now();
-        const timeDiff = nextSpinTime - now;
+        // Prochain spin = demain à 00:00
+        const nextSpinDate = new Date(lastSpinDate);
+        nextSpinDate.setDate(nextSpinDate.getDate() + 1);
+        nextSpinDate.setHours(0, 0, 0, 0);
+        
+        const now = new Date();
+        const timeDiff = nextSpinDate.getTime() - now.getTime();
         
         if (timeDiff <= 0) {
             return {

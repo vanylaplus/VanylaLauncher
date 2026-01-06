@@ -1356,7 +1356,6 @@ function wireRefreshButtonHelp() {
     btn.parentNode.replaceChild(newBtn, btn)
     
     const hardReload = () => {
-        sessionStorage.setItem('isPageReload', 'true')
         try {
             if (window.location && typeof window.location.reload === 'function') {
                 window.location.reload()
@@ -1382,33 +1381,6 @@ function wireRefreshButtonWheel() {
     btn.parentNode.replaceChild(newBtn, btn)
     
     const hardReload = () => {
-        sessionStorage.setItem('isPageReload', 'true')
-        try {
-            if (window.location && typeof window.location.reload === 'function') {
-                window.location.reload()
-                return
-            }
-        } catch (_) {}
-        try { window.location.href = window.location.href } catch (_) {}
-    }
-    
-    newBtn.addEventListener('click', (e) => {
-        e.preventDefault()
-        hardReload()
-    })
-}
-
-// Wire refresh button for Settings page
-function wireRefreshButtonSettings() {
-    const btn = document.getElementById('refreshMediaButtonSettings')
-    if(!btn) return
-    
-    // Remove all existing click listeners by cloning
-    const newBtn = btn.cloneNode(true)
-    btn.parentNode.replaceChild(newBtn, btn)
-    
-    const hardReload = () => {
-        sessionStorage.setItem('isPageReload', 'true')
         try {
             if (window.location && typeof window.location.reload === 'function') {
                 window.location.reload()
@@ -1430,7 +1402,6 @@ document.addEventListener('DOMContentLoaded', () => {
     wireRefreshButtonCGU()
     wireRefreshButtonHelp()
     wireRefreshButtonWheel()
-    wireRefreshButtonSettings()
 })
 
 // Also wire immediately in case DOM is already loaded
@@ -1439,7 +1410,6 @@ if (document.readyState !== 'loading') {
     wireRefreshButtonCGU()
     wireRefreshButtonHelp()
     wireRefreshButtonWheel()
-    wireRefreshButtonSettings()
 }
 
 // Re-wire whenever pages become visible
@@ -1448,7 +1418,6 @@ const observer = new MutationObserver(() => {
     const cguContainer = document.getElementById('cguContainer')
     const helpContainer = document.getElementById('helpContainer')
     const wheelContainer = document.getElementById('wheelContainer')
-    const settingsContainer = document.getElementById('settingsContainer')
     
     if (landingContainer && landingContainer.style.display !== 'none') {
         wireRefreshButtonLanding()
@@ -1461,9 +1430,6 @@ const observer = new MutationObserver(() => {
     }
     if (wheelContainer && wheelContainer.style.display !== 'none') {
         wireRefreshButtonWheel()
-    }
-    if (settingsContainer && settingsContainer.style.display !== 'none') {
-        wireRefreshButtonSettings()
     }
 })
 

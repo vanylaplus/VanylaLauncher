@@ -43,18 +43,17 @@ let currentView
 function switchView(current, next, transitionTime = 250, onCurrentFade = () => {}, onNextFade = () => {}){
     currentView = next
     
-    // Extract view name from container ID and preload its assets
+    // Ne pas sauvegarder Settings, CGU, Help dans localStorage - always return to landing
     const viewName = Object.keys(VIEWS).find(key => VIEWS[key] === next)
-    
-    // Ne pas sauvegarder CGU, Help dans localStorage - always return to landing
-    if (viewName && !['cgu', 'help'].includes(viewName)) {
+    if (viewName && !['settings', 'cgu', 'help'].includes(viewName)) {
         localStorage.setItem('lastView', next)
     } else {
-        // Pour cgu/help, reset à landing
+        // Pour settings/cgu/help, reset à landing
         localStorage.setItem('lastView', VIEWS.landing)
     }
 
-    // Preload assets for the view
+    // Extract view name from container ID and preload its assets
+    const viewName = Object.keys(VIEWS).find(key => VIEWS[key] === next)
     if (viewName) {
         assetPreloader.preloadViewAssets(viewName)
             .catch(e => console.debug('[switchView] Asset preload error:', e))
@@ -150,7 +149,8 @@ async function showMainUI(data){
             validateSelectedAccount()
         }
 
-        // Always spawn on Landing at startup (except first launch which goes to Welcome)
+        // Récupérer la dernière vue sauvegardée
+        const lastView = localStorage.getItem('lastView')
         let viewToShow = VIEWS.landing
 
         if(ConfigManager.isFirstLaunch()){
@@ -158,20 +158,11 @@ async function showMainUI(data){
             viewToShow = VIEWS.welcome
         } else {
             if(isLoggedIn){
-                // Check if this is a page reload (sessionStorage flag)
-                if(sessionStorage.getItem('isPageReload')){
-                    // This is a refresh - restore the last viewed page
-                    const lastView = localStorage.getItem('lastView')
-                    if(lastView && Object.values(VIEWS).includes(lastView)){
-                        currentView = lastView
-                        viewToShow = lastView
-                    } else {
-                        currentView = VIEWS.landing
-                        viewToShow = VIEWS.landing
-                    }
-                    sessionStorage.removeItem('isPageReload')
+                // Si une dernière vue existe et que l'utilisateur est connecté, la restaurer
+                if(lastView && Object.values(VIEWS).includes(lastView)){
+                    currentView = lastView
+                    viewToShow = lastView
                 } else {
-                    // Fresh launcher startup - always show landing
                     currentView = VIEWS.landing
                     viewToShow = VIEWS.landing
                 }
@@ -185,6 +176,7 @@ async function showMainUI(data){
         }
 
         $(viewToShow).fadeIn(1000)
+        
         // Masquer le background pendant la transition du loading
         document.body.classList.add('transition-mode')
 

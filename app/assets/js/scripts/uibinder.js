@@ -53,7 +53,6 @@ function switchView(current, next, transitionTime = 250, onCurrentFade = () => {
     }
 
     // Extract view name from container ID and preload its assets
-    const viewName = Object.keys(VIEWS).find(key => VIEWS[key] === next)
     if (viewName) {
         assetPreloader.preloadViewAssets(viewName)
             .catch(e => console.debug('[switchView] Asset preload error:', e))
@@ -550,3 +549,10 @@ async function devModeToggle() {
     updateSelectedServer(data.servers[0])
     syncModConfigurations(data)
 }
+
+// Expose global functions and objects for scripts
+window.getCurrentView = getCurrentView
+window.VIEWS = VIEWS
+window.switchView = switchView
+window.openSettingsView = openSettingsView
+window.ConfigManager = ConfigManager

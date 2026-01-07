@@ -72,16 +72,14 @@
 /* ===== SETTINGS CONTAINER RIGHT WRAPPER ===== */
 #settingsContainerRight {
     flex: 1 !important;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    padding: 24px !important;
-    background: linear-gradient(180deg, rgba(24, 25, 28, 0.7), rgba(24, 25, 28, 0.9)) !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    background: #18191c !important;
     display: flex !important;
     flex-direction: column !important;
-}
-
-#settingsContainerRight > div {
-    max-width: 900px !important;
+    height: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
 }
 
 /* Override launcher.css settingsTab scrolling behavior */
@@ -89,6 +87,8 @@
     width: 100% !important;
     padding-top: 0 !important;
     padding-bottom: 0 !important;
+    height: auto !important;
+    overflow-y: visible !important;
 }
 
 .settingsTab > *:first-child {
@@ -98,6 +98,61 @@
 
 .settingsTab > *:last-child {
     padding-bottom: 0 !important;
+}
+
+/* ===== EXTENDED CONTENT AREA ===== */
+.settingsTab {
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Bannière header dans chaque section */
+.settingsTab > div:first-child {
+    margin: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    box-sizing: border-box !important;
+}
+
+/* Forcer le contenu de la bannière */
+.settingsTab > div:first-child > div {
+    padding: 65px 32px !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.settingsTab > div:first-child h1 {
+    font-size: 3em !important;
+    margin: 0 0 20px 0 !important;
+    font-weight: 900 !important;
+}
+
+.settingsTab > div:first-child p {
+    font-size: 1.15em !important;
+    margin: 0 !important;
+    color: rgba(255,255,255,0.75) !important;
+}
+
+/* Contenu après la bannière */
+.settingsTab > div:nth-child(2),
+.settingsTab > div:nth-child(n+3) {
+    padding: 40px 80px !important;
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* ===== SCROLLBAR SUR CHAQUE SECTION ===== */
+.settingsTab {
+    overflow-y: auto !important;
 }
 
 /* ===== SETTINGS TOPBAR OVERRIDE ===== */
@@ -139,21 +194,23 @@
 
 /* ===== SETTINGS TAB HEADERS ===== */
 .settingsTabHeader {
-    margin-bottom: 24px !important;
+    margin-bottom: 40px !important;
     display: flex !important;
     flex-direction: column !important;
-    gap: 8px !important;
+    gap: 12px !important;
 }
 
 .settingsTabHeaderText {
-    font-size: 1.3em !important;
-    font-weight: 600 !important;
+    font-size: 2em !important;
+    font-weight: 700 !important;
     color: #fff !important;
+    letter-spacing: 0.5px !important;
 }
 
 .settingsTabHeaderDesc {
-    font-size: 0.9em !important;
-    color: rgba(255, 255, 255, 0.6) !important;
+    font-size: 1.05em !important;
+    color: rgba(255, 255, 255, 0.7) !important;
+    line-height: 1.6 !important;
 }
 
 /* ===== SETTINGS FIELD CONTAINERS ===== */
@@ -161,32 +218,34 @@
     display: flex !important;
     justify-content: space-between !important;
     align-items: center !important;
-    padding: 16px 0 !important;
+    padding: 24px 0 !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    gap: 20px !important;
 }
 
 .settingsFieldLeft {
     flex: 1 !important;
     display: flex !important;
     flex-direction: column !important;
-    gap: 4px !important;
+    gap: 8px !important;
 }
 
 .settingsFieldRight {
     display: flex !important;
     align-items: center !important;
-    gap: 8px !important;
+    gap: 12px !important;
 }
 
 .settingsFieldTitle {
-    font-size: 1em !important;
-    font-weight: 500 !important;
+    font-size: 1.15em !important;
+    font-weight: 600 !important;
     color: #fff !important;
 }
 
 .settingsFieldDesc {
-    font-size: 0.85em !important;
-    color: rgba(255, 255, 255, 0.5) !important;
+    font-size: 0.95em !important;
+    color: rgba(255, 255, 255, 0.6) !important;
+    line-height: 1.5 !important;
 }
 
 /* ===== TOGGLE SWITCHES ===== */
@@ -670,68 +729,137 @@ input:checked + .toggleSwitchSlider:before {
 
 /* ===== ACCOUNT SETTINGS ===== */
 .settingsAuthAccountTypeContainer {
-    margin: 24px 0 !important;
-    padding: 16px !important;
+    margin: 50px 0 !important;
+    padding: 40px !important;
     background: rgba(0, 0, 0, 0.2) !important;
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    border-radius: 8px !important;
+    border-radius: 12px !important;
+    min-height: 150px !important;
+}
+
+/* Override du settingsTab pour le spacing */
+#settingsTabAccount .settingsAuthAccountTypeContainer {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-bottom: 150px !important;
+}
+
+#settingsTabMinecraft .settingsAuthAccountTypeContainer {
+    margin: 0 0 150px 0 !important;
+}
+
+#settingsTabMods .settingsAuthAccountTypeContainer {
+    margin: 0 0 150px 0 !important;
+}
+
+#settingsTabJava .settingsAuthAccountTypeContainer {
+    margin: 0 0 150px 0 !important;
+}
+
+#settingsTabLauncher .settingsAuthAccountTypeContainer {
+    margin: 0 0 150px 0 !important;
+}
+
+#settingsTabAbout .settingsAuthAccountTypeContainer {
+    margin: 0 0 150px 0 !important;
+}
+
+#settingsTabUpdate .settingsAuthAccountTypeContainer {
+    margin: 0 0 150px 0 !important;
+}
+
+/* ===== MINECRAFT RESOLUTION CENTERING ===== */
+#settingsTabMinecraft #settingsGameResolutionContainer {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-bottom: 24px !important;
+}
+
+/* ===== MODS CENTERING ===== */
+#settingsTabMods #settingsModsContainer {
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+/* ===== JAVA CENTERING ===== */
+#settingsTabJava #settingsMemoryContainer {
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+#settingsTabJava #settingsJVMOptsContainer {
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+/* ===== ABOUT & UPDATE HEADER HIDING ===== */
+#settingsTabAbout .settingsTabHeader {
+    display: none !important;
+}
+
+#settingsTabUpdate .settingsTabHeader {
+    display: none !important;
 }
 
 .settingsAuthAccountTypeHeader {
     display: flex !important;
     justify-content: space-between !important;
     align-items: center !important;
-    margin-bottom: 16px !important;
-    padding-bottom: 12px !important;
+    margin-bottom: 24px !important;
+    padding-bottom: 20px !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
 
 .settingsAuthAccountTypeHeaderLeft {
     display: flex !important;
     align-items: center !important;
-    gap: 12px !important;
+    gap: 16px !important;
 }
 
 .settingsAuthAccountTypeHeaderLeft svg {
-    width: 24px !important;
-    height: 24px !important;
+    width: 32px !important;
+    height: 32px !important;
 }
 
 .settingsAuthAccountTypeHeaderLeft span {
-    font-weight: 600 !important;
+    font-weight: 700 !important;
     color: #fff !important;
+    font-size: 1.2em !important;
 }
 
 .settingsAddAuthAccount {
-    padding: 6px 12px !important;
+    padding: 16px 32px !important;
     background: rgba(0, 144, 255, 0.2) !important;
-    border: 1px solid rgba(0, 144, 255, 0.4) !important;
-    border-radius: 4px !important;
+    border: 2px solid rgba(0, 144, 255, 0.5) !important;
+    border-radius: 8px !important;
     color: #0090ff !important;
     cursor: pointer !important;
     transition: all 0.2s ease !important;
-    font-size: 0.9em !important;
-    font-weight: 500 !important;
+    font-size: 1.1em !important;
+    font-weight: 700 !important;
+    min-height: 50px !important;
+    white-space: nowrap !important;
 }
 
 .settingsAddAuthAccount:hover {
     background: rgba(0, 144, 255, 0.3) !important;
     border-color: #0090ff !important;
-    box-shadow: 0 0 8px rgba(0, 144, 255, 0.3) !important;
+    box-shadow: 0 0 12px rgba(0, 144, 255, 0.3) !important;
+    transform: translateY(-2px) !important;
 }
 
 .settingsCurrentAccounts {
     display: flex !important;
     flex-direction: column !important;
-    gap: 8px !important;
+    gap: 16px !important;
 }
 
 /* ===== DATA DIRECTORY ===== */
 #settingsDataDirTitle {
-    font-size: 1.05em !important;
-    font-weight: 600 !important;
+    font-size: 1.2em !important;
+    font-weight: 700 !important;
     color: #fff !important;
-    margin-bottom: 12px !important;
+    margin-bottom: 16px !important;
 }
 
 /* ===== ABOUT AND UPDATE TABS ===== */
@@ -746,6 +874,7 @@ input:checked + .toggleSwitchSlider:before {
     background: rgba(0, 144, 255, 0.05) !important;
     border: 1px solid rgba(0, 144, 255, 0.2) !important;
     border-radius: 8px !important;
+    margin-top: 40px !important;
     margin-bottom: 24px !important;
 }
 
